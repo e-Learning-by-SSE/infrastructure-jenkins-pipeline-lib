@@ -1,6 +1,6 @@
 #!/bin/bash
 attempt_counter=0
-max_attempts=6
+max_attempts=10
 SERVER="$1"
 
 until $(curl --output /dev/null --silent --head --fail "$SERVER"); do
