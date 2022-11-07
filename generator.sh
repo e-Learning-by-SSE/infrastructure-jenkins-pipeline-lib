@@ -13,8 +13,9 @@ PACKAGE="${ARTIFACT_ID}"
 MODEL_PACKAGE="model"
 API_PACKAGE="api"
 
-mvn clean compile -Dspec_source=$API_URL -Dversion=$VERSION -Dlanguage=$LANG -Dgroup_id=$GROUP_ID -Dartifact_id=$ARTIFACT_ID -Dpackage=$PACKAGE -Dmodel=$MODEL_PACKAGE -Dapi=$API_PACKAGE
-rm -f "${ARTIFACT_ID}_${LANG}.zip"
-cd target/generated-sources/swagger/ > /dev/null
-zip -r -q ../../../"${ARTIFACT_ID}_${LANG}.zip" .
-cd - > /dev/null
+if ./chk_server_online.sh $API_URL; then
+    mvn clean compile -Dspec_source=$API_URL -Dversion=$VERSION -Dlanguage=$LANG -Dgroup_id=$GROUP_ID -Dartifact_id=$ARTIFACT_ID -Dpackage=$PACKAGE -Dmodel=$MODEL_PACKAGE -Dapi=$API_PACKAGE
+    rm -f "${ARTIFACT_ID}_${LANG}.zip"
+    cd target/generated-sources/swagger/ > /dev/null
+    zip -r -q ../../../"${ARTIFACT_ID}_${LANG}.zip" .
+    cd - > /dev/null

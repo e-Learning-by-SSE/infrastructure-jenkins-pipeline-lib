@@ -20,7 +20,7 @@ pipeline {
 
         stage('Build') {
             steps {
-                sh 'chmod +x generator.sh'
+                sh 'chmod +x *.sh'
                 sh './generator.sh'
             }
         }
