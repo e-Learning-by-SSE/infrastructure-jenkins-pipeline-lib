@@ -19,3 +19,4 @@ if ./chk_server_online.sh $API_URL; then
     cd target/generated-sources/swagger/ > /dev/null
     zip -r -q ../../../"${ARTIFACT_ID}_${LANG}.zip" .
     cd - > /dev/null
+fi
