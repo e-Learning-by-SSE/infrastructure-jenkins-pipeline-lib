@@ -21,15 +21,11 @@ chk_availability() {
     echo -e "${GREEN}Server reachable at: ${NORMAL}$SERVER"
 
     # Wait additional time to avoid empty responses
-    sleep 30
     return 0
 }
 
 echo -e "${TITLE}Comptence-Repository${NORMAL}"
 API_URL="https://staging.sse.uni-hildesheim.de:9010/api-json"
-SPEC=$(wget "$API_URL" -q -O -)
-INFO=$(wget "$API_URL" -q -O - | grep -oP "(?<=info\":\{).*?(?=\}\})")
-VERSION=$(wget "$API_URL" -q -O - | grep -oP "(?<=info\":\{).*?(?=\}\})" | grep -oP "(?<=\"version\":\").*?(?=\",)")
 LANG="python"
 GROUP_ID="net.ssehub.e_learning"
 ARTIFACT_ID="competence_repository_api"
@@ -38,9 +34,8 @@ MODEL_PACKAGE="model"
 API_PACKAGE="api"
 
 if chk_availability $API_URL ; then
+    VERSION=$(wget "$API_URL" -q -O - | grep -oP "(?<=info\":\{).*?(?=\}\})" | grep -oP "(?<=\"version\":\").*?(?=\",)")
     rm -f "${ARTIFACT_ID}*.zip"
-    echo -e "${TITLE}Spec:${NORMAL} ${Spec}"
-    echo -e "${TITLE}Info:${NORMAL} ${INFO}"
     echo -e "${TITLE}Version:${NORMAL} ${VERSION}"
 
     # Python
