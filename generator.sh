@@ -27,6 +27,8 @@ chk_availability() {
 
 echo -e "${TITLE}Comptence-Repository${NORMAL}"
 API_URL="https://staging.sse.uni-hildesheim.de:9010/api-json"
+SPEC=$(wget "$API_URL" -q -O -)
+INFO=$(wget "$API_URL" -q -O - | grep -oP "(?<=info\":\{).*?(?=\}\})")
 VERSION=$(wget "$API_URL" -q -O - | grep -oP "(?<=info\":\{).*?(?=\}\})" | grep -oP "(?<=\"version\":\").*?(?=\",)")
 LANG="python"
 GROUP_ID="net.ssehub.e_learning"
@@ -37,7 +39,9 @@ API_PACKAGE="api"
 
 if chk_availability $API_URL ; then
     rm -f "${ARTIFACT_ID}*.zip"
-    echo "Version: ${VERSION}"
+    echo -e "${TITLE}Spec:${NORMAL} ${Spec}"
+    echo -e "${TITLE}Info:${NORMAL} ${INFO}"
+    echo -e "${TITLE}Version:${NORMAL} ${VERSION}"
 
     # Python
     mvn clean compile -Dspec_source=$API_URL -Dversion=$VERSION -Dlanguage=$LANG -Dgroup_id=$GROUP_ID -Dartifact_id=$ARTIFACT_ID -Dpackage=$PACKAGE -Dmodel=$MODEL_PACKAGE -Dapi=$API_PACKAGE
