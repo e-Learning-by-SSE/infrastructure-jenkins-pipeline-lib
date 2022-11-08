@@ -37,6 +37,7 @@ API_PACKAGE="api"
 
 if chk_availability $API_URL ; then
     rm -f "${ARTIFACT_ID}*.zip"
+    echo "Version: ${VERSION}"
 
     # Python
     mvn clean compile -Dspec_source=$API_URL -Dversion=$VERSION -Dlanguage=$LANG -Dgroup_id=$GROUP_ID -Dartifact_id=$ARTIFACT_ID -Dpackage=$PACKAGE -Dmodel=$MODEL_PACKAGE -Dapi=$API_PACKAGE
