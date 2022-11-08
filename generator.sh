@@ -21,7 +21,7 @@ chk_availability() {
     echo -e "${GREEN}Server reachable at: ${NORMAL}$SERVER"
 
     # Wait additional time to avoid empty responses
-    sleep 10
+    sleep 30
     return 0
 }
 
