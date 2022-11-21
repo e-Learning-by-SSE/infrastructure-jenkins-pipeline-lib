@@ -24,13 +24,31 @@ chk_availability() {
     return 0
 }
 
+generate() {
+    API_URL="$1"
+    GROUP_ID="$2"
+    ARTIFACT_ID="$3"
+    PACKAGE="${ARTIFACT_ID}"
+    MODEL_PACKAGE="$4"
+    API_PACKAGE="$5"
+    LANG="$6"
+
+    echo -e "  ${TITLE}- ${LANG}${NORMAL}"
+    mvn clean compile -Dspec_source=$API_URL -Dversion=$VERSION -Dlanguage=$LANG -Dgroup_id=$GROUP_ID -Dartifact_id=$ARTIFACT_ID -Dpackage=$PACKAGE -Dmodel=$MODEL_PACKAGE -Dapi=$API_PACKAGE
+    cd target/generated-sources/swagger/ > /dev/null
+    zip -r -q ../../../"${ARTIFACT_ID}_${LANG}.zip" .
+    cd - > /dev/null
+
+    return 0
+}
+
 echo -e "${TITLE}Comptence-Repository${NORMAL}"
 API_URL="https://staging.sse.uni-hildesheim.de:9010/api-json"
-GROUP_ID="net.ssehub.e_learning"
-ARTIFACT_ID="competence_repository_api"
-PACKAGE="${ARTIFACT_ID}"
-MODEL_PACKAGE="model"
-API_PACKAGE="api"
+# GROUP_ID="net.ssehub.e_learning"
+# ARTIFACT_ID="competence_repository_api"
+# PACKAGE="${ARTIFACT_ID}"
+# MODEL_PACKAGE="model"
+# API_PACKAGE="api"
 
 if chk_availability $API_URL ; then
     VERSION=$(wget "$API_URL" -q -O - | grep -oP "(?<=info\":\{).*?(?=\}\})" | grep -oP "(?<=\"version\":\").*?(?=\",)")
@@ -38,18 +56,21 @@ if chk_availability $API_URL ; then
     echo -e "${TITLE}Version:${NORMAL} ${VERSION}"
 
     # Python
-    LANG="python"
-    mvn clean compile -Dspec_source=$API_URL -Dversion=$VERSION -Dlanguage=$LANG -Dgroup_id=$GROUP_ID -Dartifact_id=$ARTIFACT_ID -Dpackage=$PACKAGE -Dmodel=$MODEL_PACKAGE -Dapi=$API_PACKAGE
-    cd target/generated-sources/swagger/ > /dev/null
-    zip -r -q ../../../"${ARTIFACT_ID}_${LANG}.zip" .
-    cd - > /dev/null
-    
+    generate "https://staging.sse.uni-hildesheim.de:9010/api-json" "net.ssehub.e_learning" "competence_repository_api" "model" "api" "python"
+    # LANG="python"
+    # mvn clean compile -Dspec_source=$API_URL -Dversion=$VERSION -Dlanguage=$LANG -Dgroup_id=$GROUP_ID -Dartifact_id=$ARTIFACT_ID -Dpackage=$PACKAGE -Dmodel=$MODEL_PACKAGE -Dapi=$API_PACKAGE
+    # cd target/generated-sources/swagger/ > /dev/null
+    # zip -r -q ../../../"${ARTIFACT_ID}_${LANG}.zip" .
+    # cd - > /dev/null
+
     # TypeScript
-    LANG="typescript-angular"
-    mvn clean compile -Dspec_source=$API_URL -Dversion=$VERSION -Dlanguage=$LANG -Dgroup_id=$GROUP_ID -Dartifact_id=$ARTIFACT_ID -Dpackage=$PACKAGE -Dmodel=$MODEL_PACKAGE -Dapi=$API_PACKAGE
-    cd target/generated-sources/swagger/ > /dev/null
-    zip -r -q ../../../"${ARTIFACT_ID}_${LANG}.zip" .
-    cd - > /dev/null
+    generate "https://staging.sse.uni-hildesheim.de:9010/api-json" "net.ssehub.e_learning" "competence_repository_api" "model" "api" "typescript-angular"
+    generate "https://staging.sse.uni-hildesheim.de:9010/api-json" "net.ssehub.e_learning" "competence_repository_api" "model" "api" "typescript-axios"
+    # LANG="typescript-angular"
+    # mvn clean compile -Dspec_source=$API_URL -Dversion=$VERSION -Dlanguage=$LANG -Dgroup_id=$GROUP_ID -Dartifact_id=$ARTIFACT_ID -Dpackage=$PACKAGE -Dmodel=$MODEL_PACKAGE -Dapi=$API_PACKAGE
+    # cd target/generated-sources/swagger/ > /dev/null
+    # zip -r -q ../../../"${ARTIFACT_ID}_${LANG}.zip" .
+    # cd - > /dev/null
 else
     exit 1
 fi
