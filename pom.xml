@@ -26,9 +26,16 @@
 							<modelPackage>${model}</modelPackage>
 							<apiPackage>${api}</apiPackage>
                             <configOptions>
+                                <!-- Python -->
                                 <packageName>${artifact_id}</packageName>
                                 <projectName>${artifact_id}</projectName>
                                 <packageVersion>${version}</packageVersion>
+                                
+                                <!-- TypeScript - Angular, see: https://generator.swagger.io/api/gen/clients/typescript-angular -->
+                                <npmName>@student-mgmt/${artifact_id}</npmName>
+                                <ngVersion>12.2.12</ngVersion>
+                                <supportsES6>true</supportsES6>
+                                <enumPropertyNaming>original</enumPropertyNaming>
                             </configOptions>
 						</configuration>
 					</execution>
