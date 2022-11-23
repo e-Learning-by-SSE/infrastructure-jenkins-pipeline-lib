@@ -56,6 +56,9 @@ if chk_availability $API_URL ; then
     # TypeScript
     generate "https://staging.sse.uni-hildesheim.de:9010/api-json" "net.ssehub.e_learning" "competence_repository_api" "model" "api" "typescript-angular"
     generate "https://staging.sse.uni-hildesheim.de:9010/api-json" "net.ssehub.e_learning" "competence_repository_api" "model" "api" "javascript"
+    
+    # PHP
+    generate "https://staging.sse.uni-hildesheim.de:9010/api-json" "net.ssehub.e_learning" "competence_repository_api" "model" "api" "php"
 else
     exit 1
 fi
