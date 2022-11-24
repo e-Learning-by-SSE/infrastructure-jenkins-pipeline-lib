@@ -36,6 +36,7 @@
                                 <ngVersion>12.2.12</ngVersion>
                                 <supportsES6>true</supportsES6>
                                 <enumPropertyNaming>original</enumPropertyNaming>
+                                <modelPropertyNaming>original</modelPropertyNaming>
                             </configOptions>
 						</configuration>
 					</execution>
