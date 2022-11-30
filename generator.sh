@@ -51,14 +51,14 @@ if chk_availability $API_URL ; then
     echo -e "${TITLE}Version:${NORMAL} ${VERSION}"
 
     # Python
-    generate "https://staging.sse.uni-hildesheim.de:9010/api-json" "net.ssehub.e_learning" "competence_repository_api" "model" "api" "python"
+    generate "$API_URL" "net.ssehub.e_learning" "competence_repository_api" "model" "api" "python"
 
     # TypeScript
-    generate "https://staging.sse.uni-hildesheim.de:9010/api-json" "net.ssehub.e_learning" "competence_repository_api" "model" "api" "typescript-angular"
-    generate "https://staging.sse.uni-hildesheim.de:9010/api-json" "net.ssehub.e_learning" "competence_repository_api" "model" "api" "javascript"
+    generate "$API_URL" "net.ssehub.e_learning" "competence_repository_api" "model" "api" "typescript-angular"
+    generate "$API_URL" "net.ssehub.e_learning" "competence_repository_api" "model" "api" "javascript"
     
     # PHP
-    generate "https://staging.sse.uni-hildesheim.de:9010/api-json" "net.ssehub.e_learning" "competence_repository_api" "model" "api" "php"
+    generate "$API_URL" "net.ssehub.e_learning" "competence_repository_api" "model" "api" "php"
 else
     exit 1
 fi
@@ -73,8 +73,8 @@ if chk_availability $API_URL ; then
     echo -e "${TITLE}Version:${NORMAL} ${VERSION}"
 
     # TypeScript
-    generate "https://staging.sse.uni-hildesheim.de:9010/api-json" "net.ssehub.e_learning" "competence_repository_api" "model" "api" "typescript-angular"
-    generate "https://staging.sse.uni-hildesheim.de:9010/api-json" "net.ssehub.e_learning" "competence_repository_api" "model" "api" "javascript"
+    generate "$API_URL" "net.ssehub.e_learning" "competence_ai_api" "model" "api" "typescript-angular"
+    generate "$API_URL" "net.ssehub.e_learning" "competence_ai_api" "model" "api" "javascript"
 else
     exit 1
 fi
