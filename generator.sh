@@ -62,3 +62,19 @@ if chk_availability $API_URL ; then
 else
     exit 1
 fi
+
+
+echo -e "${TITLE}AI Service${NORMAL}"
+API_URL="https://staging.sse.uni-hildesheim.de:9012/swagger.json"
+
+if chk_availability $API_URL ; then
+    VERSION=$(wget "$API_URL" -q -O - | grep -oP "(?<=info\": \{).*?(?=\}\})" | grep -oP "(?<=\"version\": \").*?(?=\",)")
+    rm -f "${ARTIFACT_ID}*.zip"
+    echo -e "${TITLE}Version:${NORMAL} ${VERSION}"
+
+    # TypeScript
+    generate "https://staging.sse.uni-hildesheim.de:9010/api-json" "net.ssehub.e_learning" "competence_repository_api" "model" "api" "typescript-angular"
+    generate "https://staging.sse.uni-hildesheim.de:9010/api-json" "net.ssehub.e_learning" "competence_repository_api" "model" "api" "javascript"
+else
+    exit 1
+fi
