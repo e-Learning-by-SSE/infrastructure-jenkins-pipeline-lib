@@ -56,6 +56,7 @@ if chk_availability $API_URL ; then
     # TypeScript
     generate "$API_URL" "net.ssehub.e_learning" "competence_repository_api" "model" "api" "typescript-angular"
     generate "$API_URL" "net.ssehub.e_learning" "competence_repository_api" "model" "api" "javascript"
+    generate "$API_URL" "net.ssehub.e_learning" "competence_repository_api" "model" "api" "typescript-axios"
     
     # PHP
     generate "$API_URL" "net.ssehub.e_learning" "competence_repository_api" "model" "api" "php"
