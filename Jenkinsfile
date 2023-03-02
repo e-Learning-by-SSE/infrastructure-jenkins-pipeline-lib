@@ -21,7 +21,9 @@ pipeline {
         stage('Build') {
             steps {
                 sh 'chmod +x *.sh'
-                sh './generator.sh'
+				withMaven(mavenSettingsConfig: 'mvn-elearn-repo-settings') {
+					sh './generator.sh'
+				}
             }
         }
     }
