@@ -1,9 +1,5 @@
 pipeline {
-    agent any
-    
-    tools {
-        maven 'Maven 3.8.6' 
-    }
+    agent { label 'maven' }
     
     options {
         ansiColor('xterm')
@@ -21,9 +17,9 @@ pipeline {
         stage('Build') {
             steps {
                 sh 'chmod +x *.sh'
-				withMaven(mavenSettingsConfig: 'mvn-elearn-repo-settings') {
-					sh './generator.sh'
-				}
+                withMaven(mavenSettingsConfig: 'mvn-elearn-repo-settings') {
+                    sh './generator.sh'
+                }
             }
         }
     }
