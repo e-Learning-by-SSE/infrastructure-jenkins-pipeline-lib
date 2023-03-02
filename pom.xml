@@ -37,7 +37,10 @@
                                 <ngVersion>12.2.12</ngVersion>
                                 <supportsES6>true</supportsES6>
                                 <enumPropertyNaming>original</enumPropertyNaming>
-                                <modelPropertyNaming>original</modelPropertyNaming>								
+                                <modelPropertyNaming>original</modelPropertyNaming>
+
+								<!-- Java -->
+								<dateLibrary>java8</dateLibrary> <!-- See: https://github.com/OpenAPITools/openapi-generator/issues/5444 -->
                             </configOptions>
 						</configuration>
 					</execution>
