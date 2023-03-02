@@ -50,7 +50,7 @@ generate_java() {
     LIBRARY="$4"
 
     echo -e "  ${TITLE}- Java-${LIBRARY}${NORMAL}"
-    mvn clean compile deploy -Dspec_source=$API_URL -Dversion=$VERSION -Dlanguage="java" -Dlibrary=$LIBRARY -Dgroup_id=$GROUP_ID -Dartifact_id=$ARTIFACT_ID -Dmodel="${PACKAGE}.model" -Dapi="${PACKAGE}.api"
+    mvn clean compile deploy -Dspec_source=$API_URL -Dversion=$VERSION -Dlanguage="java" -Dlibrary=$LIBRARY -Dgroup_id=$GROUP_ID -Dartifact_id=$ARTIFACT_ID -Dmodel="${PACKAGE}.model" -Dapi="${PACKAGE}.api" -Dmaven.javadoc.skip=true
     cd target/generated-sources/swagger/ > /dev/null
     zip -r -q ../../../"${ARTIFACT_ID}_java-${LIBRARY}.zip" .
     cd - > /dev/null
