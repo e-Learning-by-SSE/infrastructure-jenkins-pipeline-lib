@@ -42,6 +42,22 @@ generate() {
     return 0
 }
 
+generate_java() {
+    API_URL="$1"
+    GROUP_ID="$2"
+    ARTIFACT_ID="$3"
+    PACKAGE="${GROUP_ID}.${ARTIFACT_ID}"
+    LIBRARY="$4"
+
+    echo -e "  ${TITLE}- Java-${LIBRARY}${NORMAL}"
+    mvn clean compile -Dspec_source=$API_URL -Dversion=$VERSION -Dlanguage="java" -Dlibrary=$LIBRARY -Dgroup_id=$GROUP_ID -Dartifact_id=$ARTIFACT_ID -Dmodel="${PACKAGE}.model" -Dapi="${PACKAGE}.api"
+    cd target/generated-sources/swagger/ > /dev/null
+    zip -r -q ../../../"${ARTIFACT_ID}_java-${LIBRARY}.zip" .
+    cd - > /dev/null
+
+    return 0
+}
+
 echo -e "${TITLE}Comptence-Repository${NORMAL}"
 API_URL="https://staging.sse.uni-hildesheim.de:9010/api-json"
 
@@ -60,6 +76,9 @@ if chk_availability $API_URL ; then
     
     # PHP
     generate "$API_URL" "net.ssehub.e_learning" "competence_repository_api" "model" "api" "php"
+	
+	# Java
+	generate_java "$API_URL" "net.ssehub.e_learning" "competence_repository" "resttemplate"
 else
     exit 1
 fi
@@ -76,6 +95,9 @@ if chk_availability $API_URL ; then
     # TypeScript
     generate "$API_URL" "net.ssehub.e_learning" "competence_ai_api" "model" "api" "typescript-angular"
     generate "$API_URL" "net.ssehub.e_learning" "competence_ai_api" "model" "api" "javascript"
+	
+	# Java
+	generate_java "$API_URL" "net.ssehub.e_learning" "competence_ai" "resttemplate"
 else
     exit 1
 fi
