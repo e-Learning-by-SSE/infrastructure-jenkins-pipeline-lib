@@ -40,6 +40,11 @@ The follwing groovy scripts are available:
 generateSwaggerClient('target/openapi.json', version, 'net.ssehub', 'nm-facade-service', ['javascript', 'typescript-angular'])
 ```
 
+Notes:
+- TODO available languages
+- in case you generate clients **for the language 'java', the client is deployed** into our maven repo https://github.com/e-Learning-by-SSE/maven-packages
+- in case you're using java with maven and want to generate clients, you must have run the "package" maven phase
+
 - **getMvnProjectVersion()** : returns the version of the project defined in a pom.xml
 
 ```groovy
