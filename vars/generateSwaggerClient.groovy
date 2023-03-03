@@ -1,11 +1,13 @@
-def generateSwaggerClient(apiPath, version, groupId, artifactId, ...languages)
-  def package=artifactId
-  def modelPackage=PACKAGE + ".model"
-  def apiPackage=PACKAGE + ".api"
+def call(apiPath, version, groupId, artifactId, languages) {
+  def packageName = artifactId
+  def modelPackage = packageName + ".model"
+  def apiPackage = packageName + ".api"
   configFileProvider([configFile(fileId: 'maven-openapi-generator', variable: 'MAVEN_POM')]) {
-    strings.each { lang ->
-      sh "mvn -f $MAVEN_POM clean compile -Dspec_source= ${apiPath} -Dversion=${version} -Dlanguage=${lang} -Dgroup_id=${groupId} -Dartifact_id=${artifactId} -Dpackage=${package} -Dmodel=${modelPackage} -Dapi=${apiPackage}"
-    }
+    languages.each { lang ->
+      sh "cp -v $MAVEN_POM ./generator-pom.xml" // avoid target/ dir in the tmp jenkins dir
+      sh "mvn -f generator-pom.xml clean compile -Dbasedir=. -Dspec_source=${apiPath} -Dversion=${version} -Dlanguage=${lang} -Dgroup_id=${groupId} -Dartifact_id=${artifactId} -Dpackage=${packageName} -Dmodel=${modelPackage} -Dapi=${apiPackage}"
+      sh "zip -r -q ../../../${artifactId}_${lang}.zip target/generated-sources/swagger/"   
+      sh "rm ./generator-pom.xml"
+   }
   }
-  sh "zip -r -q ../../../${ARTIFACT_ID}_${LANG}.zip target/generated_sources/swagger/"
 }
