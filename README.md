@@ -9,14 +9,31 @@ By setting up a global pipeline library, you can write reusable Groovy code and 
 ## Jenkins Installation
 Configure your Jenkins instance to allow the use of external shared libraries. This can be done by going to `Manage Jenkins > Configure System` and scrolling down to the `Global Pipeline Libraries` section. Here, you can configure the libraries that you want to use and set their default versions.
 
+**SecurityNote:**
+Currently this library also invokes steps like `sh` and `git` which can be a security issue. You must enable this invocation in the security settings. 
+
+References:
+> https://www.jenkins.io/doc/book/pipeline/shared-libraries/
+
 ## Usage
 To use any of the following scripts, you must include this library via the `@Library`-annotation in your pipeline scripts:
 
 Declarative Example:
 ```groovy
 @Library('web-service-helper-lib') _
+```
+
+The _ after the library name is important, as it indicates that the default version of the library should be used. If you need to specify a specific version of the library, you can do so by passing the version as an argument to the @Library annotation.
+
+A dynamic more declaritive approach would be
+```groovy
 pipeline {
   agent { label 'maven' }
+  libraries {
+    lib('my-shared-library')
+  }
+
+  
   // ....
   stage('Deploy') {
       steps {
@@ -24,10 +41,8 @@ pipeline {
       }
   }
 }
-
 ```
 
-The _ after the library name is important, as it indicates that the default version of the library should be used. If you need to specify a specific version of the library, you can do so by passing the version as an argument to the @Library annotation.
 
 ## Available Scripts
 
