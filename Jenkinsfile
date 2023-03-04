@@ -25,14 +25,17 @@ pipeline {
       agent {
         label 'maven'
       }
-      steps {
+      steps {      
+        library 'web-service-helper-lib'
+        
         dir('tests/maven') {
-          library 'web-service-helper-lib'
           script {
             def version = getMvnProjectVersion()
-            assert version == "1.0.1" : "Wrong maven version, expected 1.0.0 got ${version}"
+            assert version == "1.0.0" : "Wrong maven version, expected 1.0.0 got ${version}"
           }
         }
+        
+        stagingDeploy("echo ok")
       }
     }
   }
