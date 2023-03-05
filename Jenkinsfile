@@ -26,7 +26,7 @@ pipeline {
         label 'maven'
       }
       steps {      
-        library 'web-service-helper-lib'
+        library 'github.com/e-Learning-by-SSE/nm-jenkins-groovy-helper-lib@main'
         
         dir('tests/maven') {
           script {
