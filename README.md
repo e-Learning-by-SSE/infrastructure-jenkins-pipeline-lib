@@ -1,4 +1,17 @@
-This repository contains scripts to be used by the SSE Jenkins. 
+This repository contains scripts to be used by the SSE Jenkins
+
+## Table of content
+- [About](#about)
+- [Usage](#usage)
+  - [Static (Recommended)](#static-recommended)
+    - [Installation](#installation)
+  - [Dynamic Loading](#dynamic-loading)
+- [Available Scripts](#available-scripts)
+  - [Swagger Client Generation](#swagger-client-generation)
+  - [Maven Version](#maven-version)
+  - [Run SSH Command on Staging-Server](#run-ssh-command-on-staging-server)
+  - [Publish Docker Images](#publish-docker-images)
+
 
 ## About 
 
@@ -19,7 +32,7 @@ There are two common methods to load a shared library
 1. The statis more robust approach where the library must be configured globally in jenkins
 2. The dynamic approach where the library is loaded and evaluated during pipeline execution - you can load libraries directly from git here
 
-### Static (Recommended)
+### Static Loading (Recommended)
 Declarative Example:
 ```groovy
 @Library('web-service-helper-lib') _
@@ -64,30 +77,55 @@ pipeline {
 ```
 
 ## Available Scripts
-
-
 The follwing groovy scripts are available:
 
-- **generateSwaggerClient(apiPath: string, version: string, groupId: string, artifactId: string, languages: string array)** which generates multiple clients and archive them as zip. Example usage:
+### Swagger Client Generation
+```
+generateSwaggerClient(apiPath: string, version: string, groupId: string, artifactId: string, languages: string array)
+```
+Description:
 
+- Generates multiple clients via swagger-codegen
+- Automatically archives all generated zips as artifact
+- in case you generate clients **for the language 'java', the client is deployed** into our maven repo https://github.com/e-Learning-by-SSE/maven-packages
+- in case you're using java with maven and want to generate clients, you must have run the "package" maven phase
+- TODO available languages
+
+Example: 
 ```groovy
 generateSwaggerClient('target/openapi.json', version, 'net.ssehub', 'nm-facade-service', ['javascript', 'typescript-angular'])
 ```
 
-Notes:
-- TODO available languages
-- in case you generate clients **for the language 'java', the client is deployed** into our maven repo https://github.com/e-Learning-by-SSE/maven-packages
-- in case you're using java with maven and want to generate clients, you must have run the "package" maven phase
+### Maven Version
 
-- **getMvnProjectVersion()** : returns the version of the project defined in a pom.xml
+```
+getMvnProjectVersion()
+```
+Description: 
 
+- returns the version of the project defined in a pom.xml
+
+Example: 
 ```groovy
 script {
   version = getMvnProjectVersion()
+  echo $version
 }
 ```
 
-- **stagingDeploy(updateCommand: string)**: runs an update script on the staging server via ssh
+### Run SSH Command on Staging-Server 
+
+```
+stagingDeploy(updateCommand: string)
+```
+
+Description: 
+
+- runs an update script on the staging server via ssh
+- uses elscha user
+- requires a docker agent (it runs ssh-agent inside a docker image)
+
+Example: 
 
 ```groovy
 stage('Deploy') {
@@ -97,8 +135,21 @@ stage('Deploy') {
 }
 ```
 
-- **publisDockerImages(dockerTarget: string, additionalTags: string array)**: Publishes a pre-built docker image (first parameter) with out jenkins credentials. The second argument takes an array of additional tags
+### Publish Docker Images
 
+```
+publisDockerImages(dockerTarget: string, additionalTags: string array) 
+```
+
+Description: 
+
+- Publishes a pre-built docker image (first parameter) 
+- Uses ssejenkins credentials
+- Uses github.com/e-Learning-by-SSE as target registry 
+- The second argument takes an array of additional tags which will all be pushed to the registry
+
+
+Example: 
 ```groovy
 stage('Publish Docker') {
     steps {
