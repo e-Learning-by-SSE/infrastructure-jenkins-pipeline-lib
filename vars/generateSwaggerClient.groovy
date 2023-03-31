@@ -1,16 +1,16 @@
 def call(apiPath, version, groupId, artifactId, languages) {
   configFileProvider([configFile(fileId: 'maven-openapi-generator', variable: 'MAVEN_POM')]) {
-    
-	// Avoid target/ dir in the tmp jenkins dir
-	if (lang.startsWith('typescript')) {
-		// New version, may be incompatible, not tested with all APIs
-		sh "cp -v "pom_openapi.xml" ./generator-pom.xml"
-	} else {
-		// Deprecated consider update
-		sh "cp -v $MAVEN_POM ./generator-pom.xml"
-	}
 	
     languages.each { lang ->
+	  // Avoid target/ dir in the tmp jenkins dir
+	  if (lang.startsWith('typescript')) {
+		// New version, may be incompatible, not tested with all APIs
+		sh "cp -v "pom_openapi.xml" ./generator-pom.xml"
+      } else {
+		// Deprecated consider update
+		sh "cp -v $MAVEN_POM ./generator-pom.xml"
+	  }
+	
       if (lang == 'java') {
         mavenPhase = 'compile install deploy'
         packageName = "${groupId}.${artifactId}"
