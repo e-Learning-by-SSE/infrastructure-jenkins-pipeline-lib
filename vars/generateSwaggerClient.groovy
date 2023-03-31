@@ -1,5 +1,5 @@
 def call(apiPath, version, groupId, artifactId, languages) {
-  configFileProvider([configFile(fileId: 'maven-openapi-generator', variable: 'MAVEN_POM')]) {
+  configFileProvider([configFile(fileId: 'Maven-Open-API-Generator-New', variable: 'MAVEN_POM')]) {
 	
 	sh "cp -v $MAVEN_POM ./generator-pom.xml"
     languages.each { lang ->
