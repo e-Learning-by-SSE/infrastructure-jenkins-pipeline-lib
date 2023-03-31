@@ -5,12 +5,12 @@ def call(apiPath, version, groupId, artifactId, languages) {
     languages.each { lang ->
 	
       if (lang == 'java') {
-        mavenPhase = 'compile install deploy'
+        mavenPhase = 'clean compile install deploy'
         packageName = "${groupId}.${artifactId}"
         modelPackage = packageName + ".model"
         apiPackage = packageName + ".api"
       } else {
-        mavenPhase = 'compile'
+        mavenPhase = 'clean compile'
         packageName = artifactId
         modelPackage = 'model'
         apiPackage = 'api'
