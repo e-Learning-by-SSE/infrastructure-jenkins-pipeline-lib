@@ -11,9 +11,9 @@
 
 		<plugins>
 			<plugin>
-				<groupId>io.swagger.codegen.v3</groupId>
-				<artifactId>swagger-codegen-maven-plugin</artifactId>
-				<version>3.0.35</version>
+				<groupId>org.openapitools</groupId>
+				<artifactId>openapi-generator-maven-plugin</artifactId>
+				<version>6.4.0</version>
 				<executions>
 					<execution>
 						<goals>
@@ -21,26 +21,17 @@
 						</goals>
 						<configuration>
 							<inputSpec>${spec_source}</inputSpec>
-							<language>${language}</language>
-							<apiPackage>${package}</apiPackage>
+							<generatorName>${language}</generatorName>
 							<modelPackage>${model}</modelPackage>
 							<apiPackage>${api}</apiPackage>
 							<library>${library}</library>
-                            <configOptions>
-                                <!-- Python -->
-                                <packageName>${artifact_id}</packageName>
-                                <projectName>${artifact_id}</projectName>
-                                <packageVersion>${version}</packageVersion>
-                                
+                            <configOptions>       
                                 <!-- TypeScript - Angular, see: https://generator.swagger.io/api/gen/clients/typescript-angular -->
-                                <npmName>@student-mgmt/${artifact_id}</npmName>
+                                <npmName>@e-learning-by-sse/${artifact_id}</npmName>
                                 <ngVersion>12.2.12</ngVersion>
                                 <supportsES6>true</supportsES6>
                                 <enumPropertyNaming>original</enumPropertyNaming>
                                 <modelPropertyNaming>original</modelPropertyNaming>
-
-								<!-- Java -->
-								<dateLibrary>java8</dateLibrary> <!-- See: https://github.com/OpenAPITools/openapi-generator/issues/5444 -->
                             </configOptions>
 						</configuration>
 					</execution>
