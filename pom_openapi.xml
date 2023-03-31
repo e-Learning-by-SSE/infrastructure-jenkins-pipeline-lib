@@ -27,7 +27,7 @@
 							<library>${library}</library>
                             <configOptions>       
                                 <!-- TypeScript - Angular, see: https://generator.swagger.io/api/gen/clients/typescript-angular -->
-                                <npmName>@student-mgmt/${artifact_id}</npmName>
+                                <npmName>@e-learning-by-sse/${artifact_id}</npmName>
                                 <ngVersion>12.2.12</ngVersion>
                                 <supportsES6>true</supportsES6>
                                 <enumPropertyNaming>original</enumPropertyNaming>
