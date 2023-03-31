@@ -1,6 +1,8 @@
 def call(path, token, registry='https://npm.pkg.github.com/') {
   sh '''
-    cd ${path}
+    echo "$path"
+    echo "${path}"
+	cd ${path}
 	pwd
 	npm i
 	npm set ${registry}:_authToken ${token}
