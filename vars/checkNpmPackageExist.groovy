@@ -1,7 +1,6 @@
 def call(groupName, pkgName, version, token, registry='//npm.pkg.github.com/') {
     sh 'rm -f ~/.npmrc'
-	sh "echo $groupName:registry=https:$registry >> ~/.npmrc"
-    sh "echo $registry:_authToken=$token >> ~/.npmrc"
+	  sh "echo -e $groupName:registry=https:$registry\n$registry:_authToken=$token >> ~/.npmrc"
 	
     script {
 		def npmName = "$groupName/$pkgName"
