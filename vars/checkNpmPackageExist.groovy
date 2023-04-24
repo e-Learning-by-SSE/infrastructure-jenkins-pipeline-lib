@@ -10,8 +10,10 @@ def call(groupName, pkgName, version, token, registry='//npm.pkg.github.com/') {
 		sh 'rm -f ~/.npmrc'
 		
 		if (versionList.contains("$version")) {
+			sh "echo found $version in $versionList"
 			return true
 		} else {
+		    sh "echo $version not found"
 			return false
 		}
     }
