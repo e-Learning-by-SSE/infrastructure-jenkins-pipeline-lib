@@ -1,6 +1,7 @@
 def call(groupName, pkgName, version, token, registry='//npm.pkg.github.com/') {
     sh 'rm -f ~/.npmrc'
-	  sh "echo -e $groupName:registry=https:$registry\n$registry:_authToken=$token >> ~/.npmrc"
+	  sh "echo $groupName:registry=https:$registry >> ~/.npmrc"
+		sh "echo $registry:_authToken=$token >> ~/.npmrc"
 	
     script {
 		def npmName = "$groupName/$pkgName"
@@ -9,7 +10,6 @@ def call(groupName, pkgName, version, token, registry='//npm.pkg.github.com/') {
 		sh 'rm -f ~/.npmrc'
 		
 		if (versionList.contains("$version")) {
-			sh "echo found $version in $versionList"
 			return true
 		} else {
 		    sh "echo $version not found"
