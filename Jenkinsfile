@@ -20,7 +20,6 @@ pipeline {
         sh 'groovyc -cp vars vars/*.groovy'
       }
     }
-
     stage('Function Tests') {
       agent {
         label 'maven'
@@ -50,7 +49,7 @@ pipeline {
       }
       steps {
         dir('tests/postgresSidecar') {
-          dockerPostgresSidecar('node:latest', "${env.DB_USER}", "${env.DB_PASSWORD}", "${env.DB_NAME}", "${env.DB_PORT}") {
+          postgresSidecar('node:latest', "${env.DB_USER}", "${env.DB_PASSWORD}", "${env.DB_NAME}", "${env.DB_PORT}") {
             sh 'npm install pg'
             sh 'node run testconnection.js'
           }
