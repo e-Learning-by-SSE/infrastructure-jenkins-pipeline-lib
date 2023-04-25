@@ -6,5 +6,5 @@ def call(groupName, pkgName, version, token, registry='//npm.pkg.github.com/') {
     // Do not abort if package does not exist
     versionList = sh(returnStdout: true, script: "npm view $npmName versions --json 2>&1 && echo || echo")
     sh 'rm -f ~/.npmrc'
-    return versionList.contains("$version") ?: (sh "echo $version not found"; false)
+    return versionList.contains("$version") ?: false
 }
