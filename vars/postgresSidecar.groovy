@@ -1,4 +1,4 @@
-def call(image, postgresUser, postgresPassword, postgresDb, postgresPort, Closure closure) {
+def call(image, postgresUser, postgresPassword, postgresDb, postgresPort, dockerArgs = '', Closure closure) {
   def dbImage = 'postgres:14.3-alpine'
   
   sidecar: {
@@ -7,7 +7,7 @@ def call(image, postgresUser, postgresPassword, postgresDb, postgresPort, Closur
         docker.image(dbImage).inside("--link ${c.id}:db") {
           sh "sleep 20"
         }
-        docker.image(image).inside("--link ${c.id}:db") {
+        docker.image(image).inside("--link ${c.id}:db" ${dockerArgs}) {
           closure()
         }
       }

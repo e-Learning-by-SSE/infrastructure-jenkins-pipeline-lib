@@ -49,7 +49,7 @@ pipeline {
       }
       steps {
         dir('tests/postgresSidecar') {
-          postgresSidecar('node:latest', "${env.DB_USER}", "${env.DB_PASSWORD}", "${env.DB_NAME}", "${env.DB_PORT}") {
+          postgresSidecar('node:latest', "${env.DB_USER}", "${env.DB_PASSWORD}", "${env.DB_NAME}", "${env.DB_PORT}", dockerArgs: "--tmpfs /.cache -v $HOME/.npm:/.npm") {
             sh 'npm install pg'
             sh 'node run testconnection.js'
           }
