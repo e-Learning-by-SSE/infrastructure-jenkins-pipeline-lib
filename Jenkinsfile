@@ -38,5 +38,24 @@ pipeline {
         stagingDeploy("echo ok")
       }
     }
+    
+    stage('Postgres Sidecar Test') {
+       environment {
+         // passed down to js file
+         DB_USER = 'myuser'
+         DB_HOST = 'localhost'
+         DB_NAME = 'mydatabase'
+         DB_PASSWORD = 'mypassword'
+         DB_PORT = '5432'
+      }
+      steps {
+        dir('tests/postgresSidecar') {
+          dockerPostgresSidecar('node:latest', "${env.DB_USER}", "${env.DB_PASSWORD}", "${env.DB_NAME}", "${env.DB_PORT}") {
+            sh 'npm install pg'
+            sh 'node run testconnection.js'
+          }
+        }
+      }
+    }
   }
 }
