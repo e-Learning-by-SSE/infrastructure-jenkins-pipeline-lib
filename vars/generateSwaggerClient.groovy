@@ -1,9 +1,7 @@
-def call(apiPath, version, groupId, artifactId, languages) {
+def call(apiPath, version, groupId, artifactId, languages, Closure closure = null) {
   configFileProvider([configFile(fileId: 'Maven-Open-API-Generator-New', variable: 'MAVEN_POM')]) {
-	
-	sh "cp -v $MAVEN_POM ./generator-pom.xml"
+    sh "cp -v $MAVEN_POM ./generator-pom.xml"
     languages.each { lang ->
-	
       if (lang == 'java') {
         mavenPhase = 'clean compile install deploy'
         packageName = "${groupId}.${artifactId}"
@@ -16,10 +14,12 @@ def call(apiPath, version, groupId, artifactId, languages) {
         apiPackage = 'api'
       }
       sh "mvn -f generator-pom.xml ${mavenPhase} -Dspec_source=${apiPath} -Dversion=${version} -Dlanguage=${lang} -Dgroup_id=${groupId} -Dartifact_id=${artifactId} -Dpackage=${packageName} -Dmodel=${modelPackage} -Dapi=${apiPackage}"
-      
-	  sh "zip -r -q ${artifactId}_${lang}.zip target/generated-sources/openapi/"
+      sh "zip -r -q ${artifactId}_${lang}.zip target/generated-sources/openapi/"
       archiveArtifacts artifacts: "${artifactId}_${lang}.zip"
+      if (closure != null) {
+          closure()
+      }
     }
-	sh "rm ./generator-pom.xml" 
+    sh "rm ./generator-pom.xml"
   }
 }
