@@ -1,4 +1,4 @@
-def call(image, postgresUser, postgresPassword, postgresDb, postgresPort,, Closure closure) {
+def call(image, postgresUser, postgresPassword, postgresDb, postgresPort, Closure closure) {
   def dbImage = 'postgres:14.3-alpine'
   
   sidecar: {
