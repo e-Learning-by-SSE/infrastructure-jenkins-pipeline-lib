@@ -1,0 +1,28 @@
+Create an instance of PostgresTestImage.
+
+## Start
+To start a simple psql container run:
+```
+withPostgres()
+```
+
+The default values are:
+TODO
+
+You can configure it:
+```
+TODO
+```
+
+## Sidecar
+
+To run something inside a sidecar container: 
+```
+withPostgres().insideSidecar("node:latest", "--tmpfs /.cache -v $HOME/.npm:/.npm") {
+    sh 'npm install pg'
+    sh 'node testconnection.js'
+}
+```
+
+You must take care that you application (here testconnection.js) is configured to use the postgres database settings. 
+When using sidecar, the db server is always reachable under "db" hostname and Port 5432. It doesn't matter which public port was provided inside the `withPostgres` method, because you'll use the internal docker network.

@@ -11,7 +11,7 @@ const pool = new Pool({
 pool.query('SELECT NOW()', (err, res) => {
   if (err) {
     console.error(err);
-    return;
+    process.exit(1)
   }
   console.log('PostgreSQL connected!');
   console.log(res.rows);
