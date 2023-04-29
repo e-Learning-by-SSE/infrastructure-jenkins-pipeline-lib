@@ -1,4 +1,7 @@
+@Library('github.com/e-Learning-by-SSE/nm-jenkins-groovy-helper-lib@main') _
+
 pipeline {
+
   agent {
     label 'docker'
   }
@@ -9,24 +12,23 @@ pipeline {
 
   stages {
 
-    // Tests if the groovy syntax is ok
-    stage('Syntax Test') {
+    stage('Vars Syntax Test') {
       agent {
         docker {
           image 'groovy:latest'
         }
       }
       steps {
-        sh 'groovyc -cp vars vars/*.groovy'
+        sh 'groovyc -cp vars:src vars/*.groovy '
       }
     }
-    stage('Function Tests') {
+
+    stage('Misc Function Tests') {
       agent {
         label 'maven'
       }
       steps {      
-        library 'github.com/e-Learning-by-SSE/nm-jenkins-groovy-helper-lib@main'
-        
+
         dir('tests/maven') {
           script {
             def version = getMvnProjectVersion()
@@ -38,23 +40,43 @@ pipeline {
       }
     }
     
-    stage('Postgres Sidecar Test') {
+    stage('With Postgres Test') {
+      environment {
+        DB_PORT = 5433
+      }
+      steps {
+        dir('tests/postgresSidecar') {
+          withPostgres([dbPort: env.DB_PORT]) {
+            script {
+              def exitCode = sh(script: "nc -zv localhost ${env.DB_PORT}", returnStatus: true)
+              assert exitCode == 0, "The test script failed with exit code ${exitCode}, port is not reachable"               
+            }
+          }
+        }
+      }
+    }
+
+    stage('Postgres double Sidecar Test') {
        environment {
          // passed down to js file
          DB_USER = 'myuser'
-         DB_HOST = 'localhost'
+         DB_HOST = 'db' // is resolved inside a docker image
          DB_NAME = 'mydatabase'
          DB_PASSWORD = 'mypassword'
          DB_PORT = '5432'
       }
       steps {
         dir('tests/postgresSidecar') {
-          postgresSidecar('node:latest', "${env.DB_USER}", "${env.DB_PASSWORD}", "${env.DB_NAME}", "${env.DB_PORT}", dockerArgs: "--tmpfs /.cache -v $HOME/.npm:/.npm") {
-            sh 'npm install pg'
-            sh 'node run testconnection.js'
+          script {
+            withPostgres([ dbUser: DB_USER,  dbPassword: DB_PASSWORD,  dbName: DB_NAME]).insideSidecar("node:latest", "--tmpfs /.cache -v $HOME/.npm:/.npm") {
+              sh 'npm install pg'
+              def exitCode = sh(script: 'node testconnection.js', returnStatus: true)
+              assert exitCode == 0, "The test script failed with exit code ${exitCode}"
+            }
           }
         }
       }
     }
+
   }
 }
