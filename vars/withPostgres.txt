@@ -7,11 +7,17 @@ withPostgres()
 ```
 
 The default values are:
-TODO
+- dbImage: 'postgres:latest',
+- dbUser: 'myuser',
+- dbPassword: 'mypassword',
+- dbName: 'mydatabase',
+- dbExposedPort: '5432'
 
-You can configure it:
+You can configure it like:
 ```
-TODO
+withPostgres([ dbUser: DB_USER,  dbPassword: DB_PASSWORD,  dbName: DB_NAME, dbExposedPort: 5433]) {
+
+}
 ```
 
 ## Sidecar

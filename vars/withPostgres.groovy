@@ -4,7 +4,7 @@ def call(Map args, Closure toRunWith = null) {
     dbUser: 'myuser',
     dbPassword: 'mypassword',
     dbName: 'mydatabase',
-    dbPort: '5432'
+    dbExposedPort: '5432'
   ]
   args = defaultArgs << args
   //args = defaultArgs.withDefault { key -> args[key] }
@@ -14,7 +14,7 @@ def call(Map args, Closure toRunWith = null) {
     args.dbUser,
     args.dbPassword,
     args.dbName,
-    args.dbPort,
+    args.dbExposedPort,
     {
       sh "until PGPASSWORD=${args.dbPassword} psql -h db -p 5432 -U ${args.dbUser} -d ${args.dbName} -c \"SELECT version();\"; do sleep 5; done"
     }
