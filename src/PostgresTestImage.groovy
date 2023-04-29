@@ -1,4 +1,4 @@
-import org.jenkinsci.plugins.docker.workflow.*
+import org.jenkinsci.plugins.docker.workflow.Docker
 
 class PostgresTestImage {
     String postgresImage
