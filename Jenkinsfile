@@ -16,10 +16,12 @@ pipeline {
       agent {
         docker {
           image 'groovy:latest'
+          label 'master'
+          args '-v /var/lib/jenkins/plugins/:/plugins -v /usr/share/jenkins/jenkins.war/WEB-INF/lib/:/core'
         }
       }
       steps {
-        sh 'groovyc -cp vars:src vars/*.groovy '
+        sh 'groovyc -cp vars:src:$(find /plugins -name \'*.jar\' -printf \'%p:\'):core/* vars/*.groovy '
       }
     }
 
