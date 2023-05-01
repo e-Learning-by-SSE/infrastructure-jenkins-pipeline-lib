@@ -11,6 +11,14 @@ pipeline {
   }
 
   stages {
+
+    stage('SCM') {
+      steps {
+        cleanWs()
+        checkout scm
+      } 
+    }
+
     stage('Vars Syntax Test') {
       agent {
         docker {
@@ -31,21 +39,43 @@ pipeline {
 
     stage('Start Function Tests') {
       parallel {
+
         stage('Misc Function Tests') {
           agent {
-            label 'maven'
+            label 'docker && maven'
           }
-          steps {      
+          steps {     
+
+            echo 'test getMvnProjectVersion'
             dir('tests/maven') {
               script {
                 def version = getMvnProjectVersion()
                 assert version == "1.0.0" : "Wrong maven version, expected 1.0.0 got ${version}"
               }
             }
+            
+            echo 'test stagingDeploy'
             stagingDeploy("echo ok")
+
           }
         }
           
+        stage ('NPM Publish Test') {
+          agent {
+            docker {
+              image 'node'
+              reuseNode true
+              label 'docker'
+              args '--tmpfs /.cache -v $HOME/.npm:/.npm'
+            }
+          }
+          steps {
+            dir('tests/npm') {
+                publishNpmIfNotExist('@e-learning-by-sse', 'ci_dummy_test', '1.0.0', 'e-learning-by-sse')
+            }
+          }
+        }
+
         stage('With Postgres Test') {
           environment {
             DB_PORT = 5433
