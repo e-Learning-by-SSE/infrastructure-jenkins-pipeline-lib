@@ -50,7 +50,7 @@ pipeline {
             dir('tests/maven') {
               script {
                 def version = getMvnProjectVersion()
-                assert version == "1.0.0" : "Wrong maven version, expected 1.0.0 got ${version}"
+                assert version == "1.2" : "Wrong maven version, expected 1.2 got ${version}"
               }
             }
             
