@@ -1,0 +1,9 @@
+This command publishes a npm package. It does not fail if the pacakge already exists. It uses a npmrc configuration identified by the given id (you must set up the configuration inside your jenkins installation). See https://www.jenkins.io/doc/pipeline/steps/pipeline-npm/
+
+Example use:
+
+```groovy
+dir('tests/npm') {
+    publishNpm('e-learning-by-sse') 		// won't fail if exists
+}
+```

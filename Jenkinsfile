@@ -71,7 +71,7 @@ pipeline {
           }
           steps {
             dir('tests/npm') {
-                publishNpmIfNotExist('@e-learning-by-sse', 'ci_dummy_test', '1.0.0', 'e-learning-by-sse')
+                publishNpm('e-learning-by-sse')
             }
           }
         }
