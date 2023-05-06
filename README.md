@@ -113,6 +113,27 @@ script {
 }
 ```
 
+### NPM Version
+TODO coming soon
+
+### package.json Version Expression
+
+This will check the contents of the last commit (the changes of all files the jenkins master receives from SCM) for a version change inside the package.json. Returns true if this is the case, so this can be used as expression. 
+
+```groovy
+stage('Deploy') {
+  when {
+    expression {
+      // Check if the package.json file was changed to a new version
+      return PackageJson.isNewVersion()
+    }
+  }
+  steps {
+    // Deploy stage code
+  }
+}
+```
+
 ### Run SSH Command on Staging-Server 
 
 ```

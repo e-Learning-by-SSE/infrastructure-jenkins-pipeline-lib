@@ -113,6 +113,19 @@ pipeline {
             }
           }
         }
+
+        stage('NPM Version Expression Test') {
+          when {
+            expression {
+              return packageJson.isNewVersion
+            }
+          }
+          steps {
+            // this must be triggered and checked manually - no automation possible so far
+            // triggered when a commit is made which changes any package.json version inside this repository
+            echo 'package.json was changed'
+          }
+        }
       }
     }
   }
