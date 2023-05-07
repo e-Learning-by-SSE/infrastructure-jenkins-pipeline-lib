@@ -8,7 +8,6 @@ def isNewVersion() {
         //if (change.getPath().endsWith("package.json") && change.getDiff().contains("version")) {
             return true
         //}
-        }
     }
     return false
 }
