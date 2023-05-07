@@ -19,9 +19,6 @@ pipeline {
     }
 
     stage('Vars Syntax Test') {
-      options {
-        failFast false // temporary fix
-      }
       agent {
         docker {
           image 'groovy:latest'
@@ -29,6 +26,7 @@ pipeline {
           args '-v /var/lib/jenkins/plugins/:/plugins -v /var/cache/jenkins/war/WEB-INF/lib/:/core'
         }
       }
+      failFast false
       steps {
         sh '''
           groovyc -cp /opt/groovy/lib/*:vars:src:/core/jenkins-core*.jar:$(find /plugins -name \'*.jar\' -printf \'%p:\') vars/*.groovy
