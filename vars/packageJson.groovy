@@ -4,6 +4,7 @@ def isNewVersion(Map config = [:]) {
     publisher.publishLastChanges()
     def changes = publisher.getLastChanges()
 
+
     for (commit in changes.getCommits()) {
         String gitDiff = commit.getChanges()
         def fileName = "package.json"
@@ -17,4 +18,12 @@ def isNewVersion(Map config = [:]) {
         }
     }
     return false
+}
+
+def getVersion() {
+    try {
+        sh "jq -r '.version' package.json"
+    catch (err) {
+        sh 'grep -oP \'(?<="version": ")[^"]*\' package.json'
+    }
 }

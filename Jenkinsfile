@@ -65,7 +65,7 @@ pipeline {
                 sh "git commit -m \"test ${name}\""
               }
               
-              dir('temp') {
+              dir('tests/npm/temp') {
                 sh 'git init'
                 sh 'git config user.email "jenkins@jenkins"'
                 sh 'git config user.name "jenkins"'
