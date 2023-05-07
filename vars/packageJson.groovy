@@ -4,12 +4,10 @@ def isNewVersion() {
     def changes = publisher.getLastChanges()
 
     for (commit in changes.getCommits()) {
-        println(commit.getChanges)
-        for (change in commit.getChanges()) {
-            echo(change.getEscapedDiff)
-            //if (change.getPath().endsWith("package.json") && change.getDiff().contains("version")) {
-                return true
-            //}
+        println(commit.getChanges())
+        //if (change.getPath().endsWith("package.json") && change.getDiff().contains("version")) {
+            return true
+        //}
         }
     }
     return false
