@@ -23,7 +23,7 @@ def isNewVersion(Map config = [:]) {
 def getVersion() {
     try {
         sh "jq -r '.version' package.json"
-    catch (err) {
+    } catch (err) {
         sh 'grep -oP \'(?<="version": ")[^"]*\' package.json'
     }
 }
