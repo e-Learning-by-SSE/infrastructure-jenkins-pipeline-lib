@@ -3,7 +3,7 @@ def isNewVersion() {
     publisher.publishLastChanges()
     def changes = publisher.getLastChanges()
 
-    for (commit in changes.getCommits()) {#
+    for (commit in changes.getCommits()) {
         String gitDiff = commit.getChanges()
         def fileName = "package.json"
         def versionPattern = /(^|\n)\s*"version"\s*:\s*"[^"]*"/
