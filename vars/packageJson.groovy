@@ -1,10 +1,13 @@
 def isNewVersion() {
-    def changeset = currentBuild.changeSets
-    def packageJsonChange = changeset.getAffectedFiles().find { it.getPath().endsWith('package.json') }
-    if (packageJsonChange) {
-        def diff = packageJsonChange.getDiff().getContent()
-        return diff.contains('"version":')
-    } else {
-        return false
+    def publisher = LastChanges.getLastChangesPublisher "LAST_SUCCESSFUL_BUILD", "SIDE", "LINE", true, true, "", "", "", "", ""
+    publisher.publishLastChanges()
+    def changes = publisher.getLastChanges()
+    println(changes.getEscapedDiff())
+    for (commit in changes.getCommits()) {
+        println(commit)
+        def commitInfo = commit.getCommitInfo()
+        println(commitInfo)
+        println(commitInfo.getCommitMessage())
+        println(commit.getChanges())
     }
 }
