@@ -1,5 +1,5 @@
 def isNewVersion() {
-    def publisher = LastChanges.getLastChangesPublisher "PREVIOUS_REVISION", "SIDE", "LINE", true, true, "", "", "", "", ""
+    def publisher = LastChanges.getLastChangesPublisher "LAST_TAG", "SIDE", "LINE", true, true, "", "", "", "", ""
     publisher.publishLastChanges()
     def changes = publisher.getLastChanges()
 
