@@ -7,10 +7,16 @@ pipeline {
 
   options {
     ansiColor('xterm')
-    skipDefaultCheckout true
   }
 
   stages {
+
+    stage('SCM') {
+      steps {
+        cleanWs()
+        checkout scm
+      } 
+    }
 
     stage('Vars Syntax Test') {
       agent {
@@ -21,8 +27,6 @@ pipeline {
         }
       }
       steps {
-        cleanWs()
-        checkout scm
         sh '''
           set +x
           groovyc -cp /opt/groovy/lib/*:vars:src:/core/jenkins-core-*.jar:$(find /plugins -name \'*.jar\' -printf \'%p:\') vars/*.groovy
