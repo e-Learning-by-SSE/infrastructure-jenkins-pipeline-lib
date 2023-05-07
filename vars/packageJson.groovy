@@ -1,4 +1,4 @@
-def call() {
+def isNewVersion() {
     def changeset = currentBuild.changeSets.getChanges()[0]
     def packageJsonChange = changeset.getAffectedFiles().find { it.getPath().endsWith('package.json') }
     if (packageJsonChange) {
