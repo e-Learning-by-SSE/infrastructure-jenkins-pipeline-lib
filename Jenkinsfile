@@ -78,6 +78,8 @@ pipeline {
                 sh 'git add package.json'
                 sh 'git commit -m "test commit"'
                 assert packageJson.isNewVersion(since: 'PREVIOUS_REVISION') == true
+
+                assert packageJson.getVersion() == '1.0.1'
               }
             }
           }
