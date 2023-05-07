@@ -57,7 +57,38 @@ pipeline {
             echo 'test stagingDeploy'
             stagingDeploy("echo ok")
 
+            script {
+              echo 'test packageJson.isNewVersion'
+              def commitFile = { name -> 
+                sh "touch ${name}"
+                sh "git add ${name}"
+                sh "git commit -m \"test ${name}\""
+              }
+              
+              dir('temp') {
+                sh 'git init'
+                sh 'git config user.email "jenkins@jenkins"'
+                sh 'git config user.name "jenkins"'
+                
+                commitFile("README")
+                commitFile("ANOTHER_README")
+                assert packageJson.isNewVersion(since: 'PREVIOUS_REVISION') == false
+
+                sh 'cp ../package.json ./'
+                sh 'git add package.json'
+                sh 'git commit -m "test commit"'
+                assert packageJson.isNewVersion(since: 'PREVIOUS_REVISION') == true
+              }
+            }
           }
+        }
+
+         stage('Test') {
+            steps {
+                script {
+  
+                }
+            }
         }
           
         stage ('NPM Publish Test') {
