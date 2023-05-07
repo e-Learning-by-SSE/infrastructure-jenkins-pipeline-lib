@@ -21,9 +21,11 @@ def isNewVersion(Map config = [:]) {
 }
 
 def getVersion() {
+    def version
     try {
-        sh 'jq -r \.version\' package.json'
+        version = sh(script: 'jq -r \'.version\' package.json', returnStdout: true).trim()
     } catch (err) {
-        sh 'grep -oP \'(?<="version": ")[^"]*\' package.json'
+        version = sh(script: 'grep -oP \'(?<="version": ")[^"]*\' package.json', returnStdout: true).trim()
     }
+    return version
 }
