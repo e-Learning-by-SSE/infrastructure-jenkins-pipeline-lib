@@ -5,6 +5,7 @@ def isNewVersion() {
 
     for (commit in changes.getCommits()) {
         for (change in commit.getChanges()) {
+            println change
             if (change.getPath().endsWith("package.json") && change.getDiff().contains("version")) {
                 return true
             }
