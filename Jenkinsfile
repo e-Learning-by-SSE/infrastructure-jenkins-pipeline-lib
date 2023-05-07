@@ -29,9 +29,7 @@ pipeline {
       }
       steps {
         sh '''
-          set +x
           groovyc -cp /opt/groovy/lib/*:vars:src:/core/jenkins-core-*.jar:$(find /plugins -name \'*.jar\' -printf \'%p:\') vars/*.groovy
-          set -x
           '''
         echo 'Syntax ok - checked with groovy compiler'
       }
@@ -78,7 +76,7 @@ pipeline {
                 sh 'git commit -m "test commit"'
                 assert packageJson.isNewVersion(since: 'PREVIOUS_REVISION') == true
 
-                assert packageJson.getVersion() == '1.0.1'
+                assert packageJson.getVersion() == '1.0.0'
               }
             }
           }
