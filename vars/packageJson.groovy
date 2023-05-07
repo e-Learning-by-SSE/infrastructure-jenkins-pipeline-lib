@@ -7,8 +7,8 @@ def isNewVersion() {
         def fileName = "package.json"
         def versionPattern = /(^|\n)\s*"version"\s*:\s*"[^"]*"/
 
-        if (gitDiff.contains("diff --git a/${fileName}")) {
-            if (gitDiff.find(versionPattern)) {
+        if (commit.contains("diff --git a/${fileName}")) {
+            if (commit.find(versionPattern)) {
                 println "The 'version' line in ${fileName} was changed"
                 return true
             }
