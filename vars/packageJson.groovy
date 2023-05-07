@@ -1,6 +1,6 @@
 def isNewVersion() {
     def publisher = LastChanges.getLastChangesPublisher "PREVIOUS_REVISION", "SIDE", "LINE", true, true, "", "", "", "", ""
-    //publisher.publishLastChanges()
+    publisher.publishLastChanges()
     def changes = publisher.getLastChanges()
 
     for (commit in changes.getCommits()) {
