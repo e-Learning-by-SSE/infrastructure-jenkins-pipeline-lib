@@ -28,7 +28,7 @@ pipeline {
         }
       }
       steps {
-        sh 'ls'
+        sh 'pwd'
         sh '''
           set +x
           groovyc -cp /opt/groovy/lib/*:vars:src:/core/jenkins-core-*.jar:$(find /plugins -name \'*.jar\' -printf \'%p:\') vars/*.groovy
