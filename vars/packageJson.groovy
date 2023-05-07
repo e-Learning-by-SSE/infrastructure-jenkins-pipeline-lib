@@ -6,7 +6,7 @@ def isNewVersion() {
     for (commit in changes.getCommits()) {
         String gitDiff = commit.getChanges()
         def fileName = "package.json"
-        def versionPattern = /(^|\n)\s*"version"\s*:\s*"[^"]*"/
+        def versionPattern = /(^|\n)(\-|\+)\s*"version"\s*:\s*"[^"]*"/
 
         if (gitDiff.contains("diff --git a/${fileName}")) {
             if (gitDiff.find(versionPattern)) {
