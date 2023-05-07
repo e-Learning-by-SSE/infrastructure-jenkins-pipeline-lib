@@ -1,4 +1,4 @@
-def isNewVersion(Map config[:]) {
+def isNewVersion(Map config = [:]) {
     def since = config.since ? 'LAST_TAG'
     def publisher = LastChanges.getLastChangesPublisher since, "SIDE", "LINE", true, true, "", "", "", "", ""
     publisher.publishLastChanges()
