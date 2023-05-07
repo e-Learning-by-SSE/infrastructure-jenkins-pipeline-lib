@@ -83,14 +83,6 @@ pipeline {
             }
           }
         }
-
-         stage('Test') {
-            steps {
-                script {
-  
-                }
-            }
-        }
           
         stage ('NPM Publish Test') {
           agent {
