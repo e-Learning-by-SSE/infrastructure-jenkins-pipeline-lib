@@ -57,15 +57,14 @@ pipeline {
             echo 'test stagingDeploy'
             stagingDeploy("echo ok")
 
-            script {
-              echo 'test packageJson.isNewVersion'
-              def commitFile = { name -> 
-                sh "touch ${name}"
-                sh "git add ${name}"
-                sh "git commit -m \"test ${name}\""
-              }
-              
-              dir('tests/npm/temp') {
+            echo 'test packageJson.isNewVersion'              
+            dir('tests/npm/temp') {
+              script {
+                def commitFile = { name -> 
+                  sh "touch ${name}"
+                  sh "git add ${name}"
+                  sh "git commit -m \"test ${name}\""
+                }
                 sh 'git init'
                 sh 'git config user.email "jenkins@jenkins"'
                 sh 'git config user.name "jenkins"'
