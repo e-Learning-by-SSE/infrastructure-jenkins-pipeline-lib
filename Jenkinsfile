@@ -17,7 +17,7 @@ pipeline {
         checkout scmGit(
           branches: [[name: 'main']],
           userRemoteConfigs: [[url: 'https://github.com/e-Learning-by-SSE/nm-jenkins-groovy-helper-lib.git']])
-      } 
+      }
     }
 
     stage('Vars Syntax Test') {
@@ -41,16 +41,13 @@ pipeline {
       parallel {
 
         stage('Misc Function Tests') {
-          agent {
-            label 'docker && maven'
-          }
           steps {     
-
+            
             echo 'test getMvnProjectVersion'
             dir('tests/maven') {
               script {
                 def version = getMvnProjectVersion()
-                assert version == "1.2" : "Wrong maven version, expected 1.2 got ${version}"
+                assert version == "1.2.0" : "Wrong maven version, expected 1.2.0 got ${version}"
               }
             }
             
@@ -63,9 +60,8 @@ pipeline {
                 def commitFile = { name -> 
                   sh "touch ${name}"
                   sh "git add ${name}"
-                  sh "git commit -m \" test ${name} \" "
+                  sh "git commit -m \"commit ${name}\" "
                 }
-
                 sh 'git init'
                 sh 'git config user.email "jenkins@jenkins"'
                 sh 'git config user.name "jenkins"'
@@ -81,6 +77,8 @@ pipeline {
 
                 echo 'test packageJson.getVersion'
                 assert packageJson.getVersion() == '1.0.0'
+                
+                deleteDir()
               }
             }
           }
