@@ -1,4 +1,4 @@
-@Library('github.com/e-Learning-by-SSE/nm-jenkins-groovy-helper-lib@main') _
+@Library('github.com/e-Learning-by-SSE/nm-jenkins-groovy-helper-lib@dev') _
 
 pipeline {
   agent {
