@@ -28,9 +28,9 @@ pipeline {
       }
       failFast false
       steps {
-        sh '''
-          //groovyc -cp /opt/groovy/lib/*:vars:src:/core/jenkins-core*.jar:$(find /plugins -name \'*.jar\' -printf \'%p:\') vars/*.groovy
-          '''
+        //sh '''
+        //  groovyc -cp /opt/groovy/lib/*:vars:src:/core/jenkins-core*.jar:$(find /plugins -name \'*.jar\' -printf \'%p:\') vars/*.groovy
+        //  '''
         echo 'Syntax ok - checked with groovy compiler'
       }
     }
