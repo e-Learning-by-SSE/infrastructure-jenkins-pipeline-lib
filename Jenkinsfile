@@ -138,9 +138,7 @@ pipeline {
 
         stage('NPM Version Expression Test') {
           when {
-            expression {
-              return packageJson.isNewVersion
-            }
+            expression { packageJson.isNewVersion() }
           }
           steps {
             // this must be triggered and checked manually - no automation possible so far
