@@ -43,11 +43,13 @@ pipeline {
         stage('Misc Function Tests') {
           steps {     
             
+            echo 'test scriptOut'
+            assert scriptOut('echo "hi"') == "hi"
+
             echo 'test getMvnProjectVersion'
             dir('tests/maven') {
               script {
-                def version = getMvnProjectVersion()
-                assert version == "1.2.0" : "Wrong maven version, expected 1.2.0 got ${version}"
+                assert maven.getProjectVersion() == "1.2.0" : "Wrong maven version, expected 1.2.0 got ${version}"
               }
             }
             
