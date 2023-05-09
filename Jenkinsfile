@@ -1,4 +1,4 @@
-@Library('github.com/e-Learning-by-SSE/nm-jenkins-groovy-helper-lib@dev') _
+@Library('github.com/e-Learning-by-SSE/nm-jenkins-groovy-helper-lib@main') _
 
 pipeline {
   agent {
@@ -14,7 +14,9 @@ pipeline {
     stage('SCM') {
       steps {
         cleanWs()
-        checkout scm
+        checkout scmGit(
+          branches: [[name: 'main']],
+          userRemoteConfigs: [[url: 'https://github.com/e-Learning-by-SSE/nm-jenkins-groovy-helper-lib.git']])
       } 
     }
 
@@ -63,19 +65,21 @@ pipeline {
                   sh "git add ${name}"
                   sh "git commit -m \"test ${name}\""
                 }
+
                 sh 'git init'
                 sh 'git config user.email "jenkins@jenkins"'
                 sh 'git config user.name "jenkins"'
                 
                 commitFile("README")
                 commitFile("ANOTHER_README")
-                assert packageJson.isNewVersion(since: 'PREVIOUS_REVISION') == false
+                assert packageJson.isNewVersion(since: 'PREVIOUS_REVISION') == false, "There was no version change in th last revision"
 
                 sh 'cp ../package.json ./'
                 sh 'git add package.json'
                 sh 'git commit -m "test commit"'
-                assert packageJson.isNewVersion(since: 'PREVIOUS_REVISION') == true
+                assert packageJson.isNewVersion(since: 'PREVIOUS_REVISION') == true, "There was an undetected version change in the last revision"
 
+                echo 'test packageJson.getVersion'
                 assert packageJson.getVersion() == '1.0.0'
               }
             }
