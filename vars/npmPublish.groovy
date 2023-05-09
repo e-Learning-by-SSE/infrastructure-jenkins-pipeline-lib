@@ -23,6 +23,7 @@ def hasRemoteNpmVersion(Map config = [:]) {
       def versions = json.collect { it.toString() }
       if (versions.contains(config.targetVersion)) {
         return true
+      }
     }
     return false
 }
