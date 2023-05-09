@@ -12,7 +12,6 @@ def isNewVersion(Map config = [:]) {
 
         if (gitDiff.contains("diff --git a/${fileName}")) {
             if (gitDiff.find(versionPattern)) {
-                println "The 'version' line in ${fileName} was changed"
                 return true
             }
         }
