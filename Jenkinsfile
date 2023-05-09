@@ -63,7 +63,7 @@ pipeline {
                 def commitFile = { name -> 
                   sh "touch ${name}"
                   sh "git add ${name}"
-                  sh "git commit -m \"test ${name}\""
+                  sh "git commit -m \" test ${name} \" "
                 }
 
                 sh 'git init'
