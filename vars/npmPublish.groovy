@@ -2,7 +2,7 @@ def call(String npmrcId, String npmArgs = '') {
     def versionList
     withNPM(npmrcConfig: npmrcId) {
         if (isAlreadyPublished()) {
-          println("Package ${packageJson.getPgkName()} with version ${packageJson.getVersion()} was already published.")
+          println("Package ${packageJson.getPkgName()} with version ${packageJson.getVersion()} was already published.")
         } else {
             sh "npm publish ${npmArgs}"
         }
