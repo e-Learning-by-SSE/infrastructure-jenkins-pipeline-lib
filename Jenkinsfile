@@ -44,8 +44,10 @@ pipeline {
           steps {     
             
             echo 'test scriptOut'
-            assert scriptOut('echo "hi"') == "hi"
-
+            script {
+              assert scriptOut('echo "hi"') == "hi"
+            }
+            
             echo 'test getMvnProjectVersion'
             dir('tests/maven') {
               script {

@@ -190,3 +190,16 @@ stage('Publish Docker') {
     }
 }
 ```
+
+
+## Helper Methods
+
+#### ScriptOut
+ScriptOut executes a given command and returns the stdOut (trimmed).
+
+```groovy
+script {
+  def output = scriptOut('echo hi')
+  assert output == hi
+}
+```
