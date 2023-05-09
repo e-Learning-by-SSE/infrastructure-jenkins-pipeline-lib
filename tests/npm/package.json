@@ -1,6 +1,6 @@
 {
   "name": "@e-learning-by-sse/ci_dummy_project",
-  "version": "0.9.0",
+  "version": "1.0.0",
   "description": "A minimal package for testing npm publish",
   "main": "index.js",
   "scripts": {
