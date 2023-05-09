@@ -25,6 +25,7 @@
 							<modelPackage>${model}</modelPackage>
 							<apiPackage>${api}</apiPackage>
 							<library>${library}</library>
+							<engine>${generatorEngine}</engine>
                             <configOptions>       
                                 <!-- TypeScript - Angular, see: https://generator.swagger.io/api/gen/clients/typescript-angular -->
                                 <npmName>@e-learning-by-sse/${artifact_id}</npmName>
@@ -156,6 +157,9 @@
 
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<!-- Accodring to https://github.com/OpenAPITools/openapi-generator/blob/master/modules/openapi-generator-maven-plugin/README.md
+			 mustache is default engine. However, python requires handlebars -->
+		<generatorEngine>mustache</generatorEngine>  
 	</properties>
 	
 	<distributionManagement>
