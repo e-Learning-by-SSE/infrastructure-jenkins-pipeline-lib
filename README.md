@@ -99,17 +99,19 @@ generateSwaggerClient('target/openapi.json', version, 'net.ssehub', 'nm-facade-s
 ### Maven Version
 
 ```
-getMvnProjectVersion()
+maven.getVersion()
 ```
 Description: 
 
 - returns the version of the project defined in a pom.xml
+- must run alongside the pom.xml
 
 Example: 
 ```groovy
 script {
-  version = getMvnProjectVersion()
-  echo $version
+  dir(PATH_TO_POM) {
+    echo maven.getVersion
+  }
 }
 ```
 ### JS PackageJson Tools
@@ -184,7 +186,7 @@ Example:
 ```groovy
 stage('Publish Docker') {
     steps {
-        publishDockerImages("${DOCKER_TARGET}", ['1.0.0', 'unstable'])
+        dockerGithubPublish(target: DOCKER_TARGET, additionalTags: ['1.0.0', 'unstable'])
     }
 }
 ```

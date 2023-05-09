@@ -12,7 +12,6 @@ def isNewVersion(Map config = [:]) {
 
         if (gitDiff.contains("diff --git a/${fileName}")) {
             if (gitDiff.find(versionPattern)) {
-                println "The 'version' line in ${fileName} was changed"
                 return true
             }
         }
@@ -23,9 +22,23 @@ def isNewVersion(Map config = [:]) {
 def getVersion() {
     def version
     try {
-        version = sh(script: 'jq -r \'.version\' package.json', returnStdout: true).trim()
+        version = scriptOut('jq -r \'.version\' package.json')
     } catch (err) {
-        version = sh(script: 'grep -oP \'(?<="version": ")[^"]*\' package.json', returnStdout: true).trim()
+        println(err)
+        println('using grep instead')
+        version = scriptOut('grep -oP \'(?<="version": ")[^"]*\' package.json')
     }
     return version
+}
+
+def getPkgName() {
+    def name 
+    try {
+        name = scriptOut('jq -r \'.name\' package.json')
+    } catch (err) {
+        println(err)
+        println('using grep instead')
+        name = scriptOut('grep -m1 -oP \'(?<="name": ")[^"]*\' package.json')
+    }
+    return name
 }
