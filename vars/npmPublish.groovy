@@ -16,7 +16,6 @@ def isAlreadyPublished() {
 
 def hasRemoteNpmVersion(Map config = [:]) {
     def versionList = packageJson.scriptOut("npm view ${config.pkgName} versions --json 2>&1 && echo || echo")
-    def versionList = sh(returnStdout: true, script: "")
     def json = readJSON(text: versionList)
 
     if (json) {
