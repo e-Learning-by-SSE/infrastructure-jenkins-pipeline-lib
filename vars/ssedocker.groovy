@@ -1,5 +1,5 @@
 def call(Closure closure) {
-    def sseDocker = new SSEDocker()
+    def sseDocker = new SSEDocker(docker)
     Delegates.call(sseDocker, closure)
     sseDocker.execute()
 }
