@@ -46,7 +46,7 @@ class SSEDocker {
         String additionalTags
 
         String publishConfig(Image image = null) {
-            if (image == null {
+            if (image == null) {
                 image = docker.image(imageName)
             }
             if (!image.exists()) {
