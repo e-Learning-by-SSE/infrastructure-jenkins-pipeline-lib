@@ -1,3 +1,5 @@
+package net.ssehub.customdocker
+
 import org.jenkinsci.plugins.docker.workflow.Docker
 import org.jenkinsci.plugins.docker.workflow.Docker.Image
 
