@@ -1,4 +1,4 @@
-@Library('github.com/e-Learning-by-SSE/nm-jenkins-groovy-helper-lib@main') _
+@Library('github.com/e-Learning-by-SSE/nm-jenkins-groovy-helper-lib@rf_dockerBuild') _
 
 pipeline {
   agent {
@@ -15,7 +15,7 @@ pipeline {
       steps {
         cleanWs()
         checkout scmGit(
-          branches: [[name: 'main']],
+          branches: [[name: 'rf_dockerBuild']],
           userRemoteConfigs: [[url: 'https://github.com/e-Learning-by-SSE/nm-jenkins-groovy-helper-lib.git']])
       }
     }
