@@ -154,8 +154,9 @@ pipeline {
                 additionalTag 'test2'
               }
               script {
-                new SSEDocker(docker).withRegistry {
-                  docker.image('ghcr.io/e-learning-by-sse/test-docker-image:latest').pull()
+                // github doesn't allow to delete a package per cli. so in order to test this, the package 'ghcr.io/e-learning-by-sse/test-docker-image:latest' must be deleted in beforehand
+                new net.ssehub.customdocker.SSEDocker(docker).withRegistry {
+                  docker.image('ghcr.io/e-learning-by-sse/test-docker-image:test2').pull()
                 }
               }
             }
