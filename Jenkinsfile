@@ -141,6 +141,26 @@ pipeline {
             }
           }
         }
+
+        stage('Docker build and publish Test') {
+          steps {
+            ssedocker {
+              build {
+                dockerfile 'tests/docker'
+                target 'ghcr.io/e-learning-by-sse/test-docker-image:latest'
+              }
+              publish {
+                additionalTag 'test'
+                additionalTag 'test2'
+              }
+              script {
+                new SSEDocker(docker).withRegistry {
+                  docker.image('ghcr.io/e-learning-by-sse/test-docker-image:latest').pull()
+                }
+              }
+            }
+          }
+        }
       }
     }
   }

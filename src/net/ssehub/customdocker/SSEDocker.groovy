@@ -32,6 +32,12 @@ class SSEDocker {
         publishConfig?.execute()
     }
 
+    def withRegistry(Closure cl) {
+        docker.withRegistry('https://ghcr.io', 'github-ssejenkins') {
+            cl()
+        }
+    }
+
     class BuildConfig {
         private String dockerTarget
         private String dockerfilePath = '.'
@@ -71,7 +77,7 @@ class SSEDocker {
             if (this.image == null) {
                 error('You must specify an imageName or build an image in beforehand')
             }
-            docker.withRegistry('https://ghcr.io', 'github-ssejenkins') {
+            withRegistry {
                 // target contains tag - push this too
                 this.image.push()
                 additionalTags.each { tag ->
