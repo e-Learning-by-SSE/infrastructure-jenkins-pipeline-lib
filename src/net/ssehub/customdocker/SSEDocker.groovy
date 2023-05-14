@@ -29,7 +29,7 @@ class SSEDocker {
             image = buildConfig.execute()
             publishConfig?.setImage(image)
         }
-        publicConfig?.execute()
+        publishConfig?.execute()
     }
 
     class BuildConfig {
