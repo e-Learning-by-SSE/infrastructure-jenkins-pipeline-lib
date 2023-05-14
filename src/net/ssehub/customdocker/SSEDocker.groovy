@@ -13,7 +13,7 @@ class SSEDocker {
     }
 
     def build(Closure buildClosure) {
-        this.builConfig = new BuildConfig()
+        this.buildConfig = new BuildConfig()
         Delegates.call(buildConfig, buildClosure)
     }
 
