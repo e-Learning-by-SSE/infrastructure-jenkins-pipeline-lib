@@ -35,7 +35,7 @@ class SSEDocker {
 
     @Canonical
     class BuildConfig {
-        private String dockerTarget
+        private String target
         private String dockerfilePath = '.'
 
         void target(String target) {
