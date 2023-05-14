@@ -26,14 +26,13 @@ class SSEDocker {
     def execute() {
         def image = null
         if (buildConfig != null) {
-            image = buildConfig.build()
+            image = buildConfig.execute()
         }
         if (publishConfig != null) {
-            publishConfig.publish(image)
+            publishConfig.execute(image)
         }
     }
 
-    @Canonical
     class BuildConfig {
         private String dockerTarget
         private String dockerfilePath = '.'
@@ -46,8 +45,8 @@ class SSEDocker {
             this.dockerfilePath = path
         }
 
-        Image build() {
-            return docker.build(target, dockerfile)
+        Image execute() {
+            return docker.build(dockerTarget, dockerfilePath)
         }
     }
 
@@ -63,7 +62,7 @@ class SSEDocker {
             this.image = docker.image(name)
         }
 
-        String publish(Image image = null) {
+        String execute(Image image = null) {
             if (image == null && this.image == null) {
                 error('You must specify an imageName or build an image in beforehand')
             }
