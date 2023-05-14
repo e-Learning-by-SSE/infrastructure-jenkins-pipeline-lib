@@ -14,12 +14,12 @@ class SSEDocker {
 
     def build(Closure buildClosure) {
         def builconfig = new BuildConfig()
-        Delegates.call(buildConfig, buildClosure)
+        Delegates.call(buildConfig, this, buildClosure)
     }
 
     def publish(Closure publishClosure) {
         publishConfig = new PublishConfig()
-        Delegates.call(publishConfig, publishClosure)
+        Delegates.call(publishConfig, this, publishClosure)
     }
 
     def execute() {
