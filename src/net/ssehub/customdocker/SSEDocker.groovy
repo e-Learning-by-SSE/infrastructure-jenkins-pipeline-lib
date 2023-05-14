@@ -35,29 +35,44 @@ class SSEDocker {
 
     @Canonical
     class BuildConfig {
-        String target
-        String dockerfile = '.'
+        private String dockerTarget
+        private String dockerfilePath = '.'
+
+        void target(String target) {
+            this.dockerTarget = target
+        }
+
+        void dockerfile(String path) {
+            this.dockerfilePath = path
+        }
 
         Image build() {
             return docker.build(target, dockerfile)
         }
     }
 
-    @Canonical
     class PublishConfig {
-        String imageName
+        Image image
         List<String> additionalTags = []
 
         void additionalTag(String tag) {
             additionalTags << tag
         }
 
+        void imageName(String name) {
+            this.image = docker.image(name)
+        }
+
         String publish(Image image = null) {
-            if (image == null) {
-                image = docker.image(imageName)
+            if (image == null && this.image == null) {
+                error('You must specify an imageName or build an image in beforehand')
             }
             docker.withRegistry('https://ghcr.io', 'github-ssejenkins') {
-                image.push() // target contains tag - push this too
+                if (image == null) {
+                    image = this.image
+                }
+                // target contains tag - push this too
+                image.push()
                 additionalTags.each { tag ->
                     image.push("${tag}")
                 }
