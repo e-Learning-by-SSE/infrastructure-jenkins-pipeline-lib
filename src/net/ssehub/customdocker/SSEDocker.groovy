@@ -19,7 +19,11 @@ class SSEDocker {
 
     def publish(Closure publishClosure) {
         publishConfig = new PublishConfig()
-        Delegates.call(publishConfig, this, publishClosure)
+        publishClosure.delegate = publishConfig
+        publishClosure.resolveStrategy = Closure.DELEGATE_FIRST
+        publishClosure.call()
+        //publishConfig = new PublishConfig()
+        //Delegates.call(publishConfig, this, publishClosure)
     }
 
     def execute() {
