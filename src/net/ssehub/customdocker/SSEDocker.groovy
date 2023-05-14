@@ -25,7 +25,7 @@ class SSEDocker {
     def execute() {
         def image = null
         if (buildConfig != null) {
-            image = builconfig.build()
+            image = buildConfig.build()
         }
         if (publishConfig != null) {
             publishConfig.publish(image)
