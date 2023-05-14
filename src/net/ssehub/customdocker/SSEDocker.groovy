@@ -24,13 +24,12 @@ class SSEDocker {
     }
 
     def execute() {
-        def image = null
         if (buildConfig != null) {
+            def image = null
             image = buildConfig.execute()
+            publishConfig?.setImage(image)
         }
-        if (publishConfig != null) {
-            publishConfig.execute(image)
-        }
+        publicConfig?.execute()
     }
 
     class BuildConfig {
@@ -59,21 +58,21 @@ class SSEDocker {
         }
 
         void imageName(String name) {
+            if (image != null) {
+                error("Currently It is not possible to build an image and publish a different one")
+            }
             this.image = docker.image(name)
         }
 
-        String execute(Image image = null) {
-            if (image == null && this.image == null) {
+        String execute() {
+            if (this.image == null) {
                 error('You must specify an imageName or build an image in beforehand')
             }
             docker.withRegistry('https://ghcr.io', 'github-ssejenkins') {
-                if (image == null) {
-                    image = this.image
-                }
                 // target contains tag - push this too
-                image.push()
+                this.image.push()
                 additionalTags.each { tag ->
-                    image.push("${tag}")
+                    this.image.push("${tag}")
                 }
             }
         }
