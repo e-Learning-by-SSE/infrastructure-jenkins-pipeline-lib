@@ -51,7 +51,7 @@ class SSEDocker {
         }
 
         Image execute() {
-            if (dockerTarget == null || dockerFilePath == null) {
+            if (dockerTarget == null || dockerfilePath == null) {
                 error("You must specify a target to build")
             }
             return docker.build(dockerTarget, dockerfilePath)
