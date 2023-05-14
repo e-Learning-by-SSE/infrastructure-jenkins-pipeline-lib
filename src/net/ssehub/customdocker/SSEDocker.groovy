@@ -32,6 +32,7 @@ class SSEDocker {
         }
     }
 
+    @Canonical
     class BuildConfig {
         String target
         String dockerfile = '.'
@@ -41,17 +42,22 @@ class SSEDocker {
         }
     }
 
+    @Canonical
     class PublishConfig {
         String imageName
-        String additionalTags = [:]
+        List<String> additionalTags = []
+
+        void additionalTag(String tag) {
+            additionalTags << tag
+        }
 
         String publish(Image image = null) {
             if (image == null) {
                 image = docker.image(imageName)
             }
             docker.withRegistry('https://ghcr.io', 'github-ssejenkins') {
-                    image.push() // target contains tag - push this too
-                    additionalTags.each{ tag -> 
+                image.push() // target contains tag - push this too
+                additionalTags.each { tag ->
                     image.push("${tag}")
                 }
             }
