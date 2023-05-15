@@ -1,0 +1,44 @@
+# SSE Docker DSL
+
+```groovy
+ssedocker {
+  create {
+    context 'directory/to/dockerfile/'
+    target 'org/name:latest'
+  }
+  publish {
+    tag '1.0.0'
+    tag 'nightly'
+  }
+} 
+```
+
+**Parameter:**
+- create: builds a docker image 
+  - context [optional]: sets the directory for the dockerfile. Default is the current directory '.' 
+  - target: specifies the target to built
+- publish: publishes a docker image to github with ssejenkins access permissions
+  - imageName [optional]: defines the image to be published. Is necessary when no `create` was called in beforehand. e.g. 'ghcr.io/org/name:tag'
+  - tag [optional]: defines an additional tag to be published (the default from the target is always published).
+
+
+**Example 2: Publishes a pre-built image**
+```groovy
+ssedocker {
+  publish {
+    imageName 'ghcr.io/org/name:latest'
+  }
+}
+```
+This publishes an image with the id 'ghcr.io/org/name:latest'. This image must be present on the system. 
+
+**Example 3: Built and publish an image**
+```groovy
+ssedocker {
+  create {
+    target 'ghcr.io/org/name:latest'
+  }
+  publish {}
+}
+```
+The Dockerfile must be locates inside the current workdir for this because we don't set a context. This will build an Image with the target 'ghcr.io/org/name:latest' and publishes it. 
