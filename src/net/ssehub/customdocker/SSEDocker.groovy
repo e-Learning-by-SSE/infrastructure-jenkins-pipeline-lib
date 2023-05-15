@@ -56,7 +56,7 @@ class SSEDocker {
 
         Image execute() {
             if (dockerTarget == null || dockerFilePath == null) {
-                error("You must specify a target to build")
+                throw new Exception("You must specify a target to build")
             }
             return docker.build(dockerTarget, dockerfilePath)
         }
@@ -72,14 +72,14 @@ class SSEDocker {
 
         void imageName(String name) {
             if (image != null) {
-                error("Currently It is not possible to build an image and publish a different one")
+                throw new Exception("Currently It is not possible to build an image and publish a different one")
             }
             this.image = docker.image(name)
         }
 
         String execute() {
             if (this.image == null) {
-                error('You must specify an imageName or build an image in beforehand')
+                throw new Exception('You must specify an imageName or build an image in beforehand')
             }
             withRegistry {
                 // target contains tag - push this too
