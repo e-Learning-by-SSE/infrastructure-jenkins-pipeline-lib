@@ -146,7 +146,7 @@ pipeline {
           steps {
             ssedocker {
               build {
-                filepath 'tests/docker'
+                context 'tests/docker'
                 target 'ghcr.io/e-learning-by-sse/test-docker-image:latest'
               }
               publish {
