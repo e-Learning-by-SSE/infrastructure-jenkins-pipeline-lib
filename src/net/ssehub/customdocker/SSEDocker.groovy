@@ -42,12 +42,12 @@ class SSEDocker {
         private String dockerTarget
         private String dockerfilePath = '.'
 
-        void target(String tg) {
-            this.dockerTarget = tg
+        void path(String path) {
+            this.dockerfilePath = path
         }
 
-        void filepath(String path) {
-            this.dockerfilePath = path
+        void target(String tg) {
+            this.dockerTarget = tg
         }
 
         Image execute() {
