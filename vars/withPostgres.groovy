@@ -1,3 +1,5 @@
+import net.ssehub.customdocker.PostgresTestImage
+
 def call(Map args, Closure toRunWith = null) {
    Map defaultArgs = [
     dbImage: 'postgres:latest',
