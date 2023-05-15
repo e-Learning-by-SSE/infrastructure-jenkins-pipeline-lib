@@ -17,6 +17,10 @@ class SSEDocker {
         this.buildConfig = new BuildConfig()
         Delegates.call(buildConfig, buildClosure)
     }
+    def build(Closure buildClosure) {
+        this.buildConfig = new BuildConfig()
+        Delegates.call(buildConfig, buildClosure)
+    }
 
     def publish(Closure publishClosure) {
         this.publishConfig = new PublishConfig()
