@@ -13,7 +13,7 @@ class SSEDocker {
         this.docker = docker
     }
 
-    def buildImage(Closure buildClosure) {
+    def create(Closure buildClosure) {
         this.buildConfig = new BuildConfig()
         Delegates.call(buildConfig, buildClosure)
     }
