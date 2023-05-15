@@ -146,7 +146,7 @@ pipeline {
           steps {
             script {
               ssedocker {
-                build {
+                buildImage {
                   dockerfile 'tests/docker'
                   target 'ghcr.io/e-learning-by-sse/test-docker-image:latest'
                 }
