@@ -144,21 +144,21 @@ pipeline {
 
         stage('Docker build and publish Test') {
           steps {
+            ssedocker {
+              buildImage {
+                dockerFile 'tests/docker'
+                target 'ghcr.io/e-learning-by-sse/test-docker-image:latest'
+              }
+              publish {
+                additionalTag 'test'
+                additionalTag 'test2'
+              }
+            }
             script {
-              ssedocker {
-                buildImage {
-                  dockerfile 'tests/docker'
-                  target 'ghcr.io/e-learning-by-sse/test-docker-image:latest'
-                }
-                publish {
-                  additionalTag 'test'
-                  additionalTag 'test2'
-                }
-                sh 'docker image rm ghcr.io/e-learning-by-sse/test-docker-image:test'
-                // github doesn't allow to delete a package per cli. so in order to test this, the package 'ghcr.io/e-learning-by-sse/test-docker-image:latest' must be deleted in beforehand
-                new net.ssehub.customdocker.SSEDocker(docker).withRegistry {
-                  docker.image('ghcr.io/e-learning-by-sse/test-docker-image:test').pull()
-                }
+              sh 'docker image rm ghcr.io/e-learning-by-sse/test-docker-image:test'
+              // github doesn't allow to delete a package per cli. so in order to test this, the package 'ghcr.io/e-learning-by-sse/test-docker-image:latest' must be deleted in beforehand
+              new net.ssehub.customdocker.SSEDocker(docker).withRegistry {
+                docker.image('ghcr.io/e-learning-by-sse/test-docker-image:test').pull()
               }
             }
           }
