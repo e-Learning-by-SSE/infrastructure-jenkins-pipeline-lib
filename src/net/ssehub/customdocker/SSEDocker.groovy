@@ -42,8 +42,8 @@ class SSEDocker {
         private String dockerTarget
         private String dockerfilePath = '.'
 
-        void path(String path) {
-            this.dockerfilePath = path
+        void dockerfile(String p) {
+            this.dockerfilePath = p
         }
 
         void target(String tg) {
@@ -71,6 +71,7 @@ class SSEDocker {
                 throw new Exception("Currently It is not possible to build an image and publish a different one")
             }
             this.image = docker.image(name)
+            this.image.pull()
         }
 
         String execute() {

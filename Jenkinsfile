@@ -1,4 +1,4 @@
-@Library('github.com/e-Learning-by-SSE/nm-jenkins-groovy-helper-lib@main') _
+@Library('github.com/e-Learning-by-SSE/nm-jenkins-groovy-helper-lib@test2') _
 
 pipeline {
   agent {
@@ -145,8 +145,8 @@ pipeline {
         stage('Docker build and publish Test') {
           steps {
             ssedocker {
-              buildImage {
-                path 'tests/docker'
+              build {
+                filepath 'tests/docker'
                 target 'ghcr.io/e-learning-by-sse/test-docker-image:latest'
               }
               publish {
