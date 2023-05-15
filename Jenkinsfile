@@ -1,4 +1,4 @@
-@Library('github.com/e-Learning-by-SSE/nm-jenkins-groovy-helper-lib@main') _
+@Library('github.com/e-Learning-by-SSE/nm-jenkins-groovy-helper-lib@test2') _
 
 pipeline {
   agent {
@@ -145,13 +145,13 @@ pipeline {
         stage('Docker build and publish Test') {
           steps {
             ssedocker {
-              buildImage {
-                dockerFile 'tests/docker'
+              create {
+                context 'tests/docker'
                 target 'ghcr.io/e-learning-by-sse/test-docker-image:latest'
               }
               publish {
-                additionalTag 'test'
-                additionalTag 'test2'
+                tag 'test'
+                tag 'test2'
               }
             }
             script {

@@ -13,7 +13,7 @@ class SSEDocker {
         this.docker = docker
     }
 
-    def buildImage(Closure buildClosure) {
+    def create(Closure buildClosure) {
         this.buildConfig = new BuildConfig()
         Delegates.call(buildConfig, buildClosure)
     }
@@ -40,21 +40,21 @@ class SSEDocker {
 
     class BuildConfig {
         private String dockerTarget
-        private String dockerfilePath = '.'
+        private String dockerfileDir = '.'
+
+        void context(String p) {
+            this.dockerfileDir = p
+        }
 
         void target(String tg) {
             this.dockerTarget = tg
         }
 
-        void dockerFile(String path) {
-            this.dockerfilePath = path
-        }
-
         Image execute() {
-            if (dockerTarget == null || dockerfilePath == null) {
+            if (dockerTarget == null || dockerfileDir == null) {
                 throw new Exception("You must specify a target to build")
             }
-            return docker.build(dockerTarget, dockerfilePath)
+            return docker.build(dockerTarget, dockerfileDir)
         }
     }
 
@@ -62,7 +62,7 @@ class SSEDocker {
         Image image
         List<String> additionalTags = []
 
-        void additionalTag(String tag) {
+        void tag(String tag) {
             additionalTags << tag
         }
 
@@ -71,6 +71,7 @@ class SSEDocker {
                 throw new Exception("Currently It is not possible to build an image and publish a different one")
             }
             this.image = docker.image(name)
+            this.image.pull()
         }
 
         String execute() {
