@@ -146,12 +146,12 @@ pipeline {
           steps {
             ssedocker {
               buildImage {
-                dockerFile 'tests/docker'
+                filepath 'tests/docker'
                 target 'ghcr.io/e-learning-by-sse/test-docker-image:latest'
               }
               publish {
-                additionalTag 'test'
-                additionalTag 'test2'
+                tag 'test'
+                tag 'test2'
               }
             }
             script {

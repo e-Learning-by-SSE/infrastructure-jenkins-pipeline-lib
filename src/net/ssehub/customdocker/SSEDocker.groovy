@@ -46,7 +46,7 @@ class SSEDocker {
             this.dockerTarget = tg
         }
 
-        void dockerFile(String path) {
+        void filepath(String path) {
             this.dockerfilePath = path
         }
 
@@ -62,7 +62,7 @@ class SSEDocker {
         Image image
         List<String> additionalTags = []
 
-        void additionalTag(String tag) {
+        void tag(String tag) {
             additionalTags << tag
         }
 
