@@ -46,7 +46,7 @@ class SSEDocker {
             this.dockerTarget = tg
         }
 
-        void dockerfile(String path) {
+        void dockerfile2(String path) {
             this.dockerfilePath = path
         }
 
