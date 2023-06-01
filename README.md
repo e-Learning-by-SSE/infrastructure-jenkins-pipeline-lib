@@ -146,27 +146,34 @@ stage('Deploy') {
 ```
 
 
-### Run SSH Command on Staging-Server 
+### Run SSH Command on Staging-Servers
 
+#### Staging01
 ```
-stagingDeploy(updateCommand: string)
+staging01ssh("echo ok")
 ```
 
-Description: 
-
-- runs an update script on the staging server via ssh
-- uses elscha user
-- requires a docker agent (it runs ssh-agent inside a docker image)
+This runs the command "echo ok" on the staging01 server in the default login shell. It will use the user "elscha.
+In order to userequires a docker agent (it runs ssh-agent inside a docker image)
 
 Example: 
 
 ```groovy
 stage('Deploy') {
     steps {
-        stagingDeploy('/staging/update-compose-project.sh nm-competence-repository')
+        staging01ssh('/staging/update-compose-project.sh nm-competence-repository')
     }
 }
 ```
+
+#### Staging02
+To run commands on the second staging server use this:
+
+```
+staging02ssh("echo ok")
+```
+
+Same as above, but runs commands with the "jenkins" user. It has the permission to use the docker-cli.
 
 ### Built and Publish Docker Images
 

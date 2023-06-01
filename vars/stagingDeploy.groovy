@@ -1,5 +1,5 @@
 def call(updateCommand) {
-  sshagent(['STM-SSH-DEMO']) {
-      sh "ssh -o StrictHostKeyChecking=no -l elscha staging.sse.uni-hildesheim.de ${updateCommand}"
-  }
+  // deprecated - legacy support
+  println("the method stagingDeploy is deprecated. It was renamed to staging01ssh")
+  staging01ssh(updateCommand)
 }
