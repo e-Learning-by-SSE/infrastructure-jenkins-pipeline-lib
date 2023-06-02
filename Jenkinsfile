@@ -55,8 +55,9 @@ pipeline {
               }
             }
             
-            echo 'test stagingDeploy'
-            stagingDeploy("echo ok")
+            echo 'test ssh staging'
+            staging01ssh "echo staging01"
+            staging02ssh "echo staging02"
 
             echo 'test packageJson.isNewVersion'              
             dir('tests/npm/temp') {
