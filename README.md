@@ -61,7 +61,7 @@ Dynamic example, where jenkins loads it directly from github:
 pipeline {
   agent any
   libraries {
-    lib('github.com/e-Learning-by-SSE/nm-jenkins-groovy-helper-lib@main')
+    lib('github.com/e-Learning-by-SSE/infrastructure-jenkins-pipeline-lib@main')
   }
 }
 ```

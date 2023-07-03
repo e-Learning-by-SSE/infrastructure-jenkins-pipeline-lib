@@ -1,4 +1,4 @@
-@Library('github.com/e-Learning-by-SSE/nm-jenkins-groovy-helper-lib@main') _
+@Library('github.com/e-Learning-by-SSE/infrastructure-jenkins-pipeline-lib@main') _
 
 pipeline {
   agent {
@@ -16,7 +16,7 @@ pipeline {
         cleanWs()
         checkout scmGit(
           branches: [[name: 'main']],
-          userRemoteConfigs: [[url: 'https://github.com/e-Learning-by-SSE/nm-jenkins-groovy-helper-lib.git']])
+          userRemoteConfigs: [[url: 'https://github.com/e-Learning-by-SSE/infrastructure-jenkins-pipeline-lib.git']])
       }
     }
 
