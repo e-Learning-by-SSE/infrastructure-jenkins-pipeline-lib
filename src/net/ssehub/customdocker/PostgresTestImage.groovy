@@ -43,7 +43,7 @@ class PostgresTestImage {
     }
 
     private String getDockerArguments() {
-        String dockerName = "jenkins_testing_psql_" + generateRandomNumber(10, 100)
+        String dockerName = "jenkins_testing_psql_" + generateRandomNumber(10, 10000)
         String args = "--name ${dockerName} -e POSTGRES_USER=${postgresUser} -e POSTGRES_PASSWORD=${postgresPassword} -e POSTGRES_DB=${postgresDb}"   
         if (postgresExposedPort != null) {
             args += " -p ${postgresExposedPort}:5432"
