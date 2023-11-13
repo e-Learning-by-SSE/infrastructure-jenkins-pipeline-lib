@@ -86,6 +86,21 @@ pipeline {
                 deleteDir()
               }
             }
+
+            echo 'test generateAvailablePort'
+            script{
+              def socket
+              try {)
+                socket = new ServerSocket(6001)
+                def port = portAllocation.generateAvailablePort(startPort=6000, endPort=6001)
+                echo "Found port to use ${port}"
+                assert port == 6000 // port 3001 should be in use
+              } finally {
+                if (socket != null) {
+                  socket.close()
+                }
+              }
+            }
           }
         }
           
