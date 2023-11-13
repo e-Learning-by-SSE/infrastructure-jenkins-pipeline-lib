@@ -90,7 +90,7 @@ pipeline {
             echo 'test generateAvailablePort'
             script{
               def socket
-              try {)
+              try {
                 socket = new ServerSocket(6001)
                 def port = portAllocation.generateAvailablePort(startPort=6000, endPort=6001)
                 echo "Found port to use ${port}"
