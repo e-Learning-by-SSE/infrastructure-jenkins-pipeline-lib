@@ -5,11 +5,12 @@ def call(Map args, Closure toRunWith = null) {
     dbImage: 'postgres:latest',
     dbUser: 'myuser',
     dbPassword: 'mypassword',
-    dbName: 'mydatabase',
-    dbExposedPort: '5432'
+    dbName: 'mydatabase'
   ]
   args = defaultArgs << args
   //args = defaultArgs.withDefault { key -> args[key] }
+  
+  String dbExposedPort = args.containsKey('dbExposedPort') ? args.dbExposedPort : null
   def psql = new PostgresTestImage(
     docker,
     args.dbImage,

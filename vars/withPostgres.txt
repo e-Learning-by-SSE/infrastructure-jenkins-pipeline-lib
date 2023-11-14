@@ -11,7 +11,8 @@ The default values are:
 - dbUser: 'myuser',
 - dbPassword: 'mypassword',
 - dbName: 'mydatabase',
-- dbExposedPort: '5432'
+
+If you leave the dbExposedPort empty, the postgres will start but the default port 5432 is not exposed to any network (this can be helpful with the sidecar pattern; see below).
 
 You can configure it like:
 ```
