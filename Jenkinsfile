@@ -179,6 +179,27 @@ pipeline {
             }
           }
         }
+
+        stage('Docker build and publish Test') {
+          steps {
+            script {
+                try {
+                  sh 'docker image rm test-docker-image:test3'
+                } catch (Exception e) {}
+            }
+            ssedocker {
+              create {
+                context 'tests/docker'
+                target 'test-docker-image:latest'
+                args '--tag test-docker-image:test3 '
+              }
+            }
+            script {
+                def imageExists = sh(script: "docker images -q test-docker-image:test3", returnStdout: true).trim()
+                assert !imageExists.isEmpty(), "Additional argument was not passed to docker build"
+            }
+          }
+        }
       }
     }
   }

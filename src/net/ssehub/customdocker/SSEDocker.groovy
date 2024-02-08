@@ -41,6 +41,7 @@ class SSEDocker {
     class BuildConfig {
         private String dockerTarget
         private String dockerfileDir = '.'
+        private String dockerArgs = "";
 
         void context(String p) {
             this.dockerfileDir = p
@@ -50,11 +51,15 @@ class SSEDocker {
             this.dockerTarget = tg
         }
 
+        void args(String a) {
+            this.dockerArgs = a;
+        }
+
         Image execute() {
             if (dockerTarget == null || dockerfileDir == null) {
                 throw new Exception("You must specify a target to build")
             }
-            return docker.build(dockerTarget, dockerfileDir)
+            return docker.build(dockerTarget, "${dockerArgs} ${dockerfileDir}")
         }
     }
 
