@@ -180,7 +180,7 @@ pipeline {
           }
         }
 
-        stage('Docker build and publish Test') {
+        stage('Docker build args test') {
           steps {
             script {
                 try {
