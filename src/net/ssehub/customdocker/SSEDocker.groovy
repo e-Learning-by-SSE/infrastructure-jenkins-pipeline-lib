@@ -59,7 +59,7 @@ class SSEDocker {
             if (dockerTarget == null || dockerfileDir == null) {
                 throw new Exception("You must specify a target to build")
             }
-            return docker.build(dockerTarget, dockerArgs, dockerfileDir)
+            return docker.build(dockerTarget, "${dockerArgs} dockerfileDir")
         }
     }
 
