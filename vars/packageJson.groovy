@@ -26,7 +26,7 @@ def getVersion() {
     } catch (err) {
         println(err)
         println('using grep instead')
-        version = scriptOut('grep \'"version":\' package.json | sed -E \'s/.*"version": "([^"]*)".*/\1/\'')
+        version = scriptOut('grep \'"version":\' package.json | sed -E \'s/.*\\"version\\": \\"([^\\"]*)\\".*/\\1/\'')
     }
     return version
 }
@@ -38,7 +38,7 @@ def getPkgName() {
     } catch (err) {
         println(err)
         println('using grep instead')
-        name = scriptOut('grep -m1 \'"name":\' package.json | sed -E \'s/.*"name": "([^"]*)".*/\1/\'')
+        name = scriptOut('grep \'"name":\' package.json | sed -E \'s/.*\\"name\\": \\"([^\\"]*)\\".*/\\1/\'')
     }
     return name
 }
