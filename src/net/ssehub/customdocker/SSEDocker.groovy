@@ -1,7 +1,7 @@
 package net.ssehub.customdocker
 
 import org.jenkinsci.plugins.docker.workflow.Docker
-import org.jenkinsci.plugins.docker.workflow.Docker.Image
+import org.jenkinsci.plugins.docker.workflow.Docker$Image
 import groovy.transform.Canonical
 
 class SSEDocker {
@@ -93,3 +93,4 @@ class SSEDocker {
         }
     }
 }
+
