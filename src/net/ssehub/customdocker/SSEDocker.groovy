@@ -33,7 +33,7 @@ class SSEDocker {
     }
 
     def withRegistry(Closure cl) {
-        docker.withRegistry('https://ghcr.io', 'github-ssejenkins') {
+        docker.withRegistry('https://ghcr.io', 'ssejenkins-by-elscha') {
             cl()
         }
     }
